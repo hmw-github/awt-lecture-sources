@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Kontaktformular</title>
+  <style>
+    button {
+      width: 100%;
+    }
+
+    body>div {
+      width: 350px;
+      margin: 20px auto;
+      background-color: lightgray;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .prompt {
+      width: 100px;
+      display: inline-block;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h1>Kontaktformular</h1>
+    <form>
+      <p>
+        <label class="prompt" for="name">Name:</label>
+        <input type="text" id="name">
+      </p>
+      <p>
+        <label class="prompt" for="email">E-Mail:</label>
+        <input type="email" id="email">
+      </p>
+      <p>
+        <label class="prompt" for="subject">Betreff:</label>
+        <input type="text" id="subject">
+      </p>
+      <p>
+        <label class="prompt" for="text">Text:</label><br>
+        <textarea id="text"></textarea>
+      </p>
+      <p>
+        <input type="checkbox" id="copy">
+        <label for="copy">Wollen Sie eine Kopie der E-Mail erhalten?</label>
+      </p>
+      <button>Absenden</button>
+    </form>
+  </div>
+</body>
+
+</html>
