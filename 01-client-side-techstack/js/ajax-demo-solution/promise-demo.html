@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    </head>
+    <body>
+        <h3>Promise-Test - output goes to console...</h3>
+        <p>
+            We create 10 promises producing random results, either 
+            <ul>
+                <li>a person object with a valid age (&le; 40)</li>
+                <li>or a person with an invalid age &gt; 40</li>
+                <li>or an error</li>
+            </ul>
+        </p>
+        <p>
+            This demonstrates ...
+            <ul>
+                <li>how a Promise is generated and delivers results</li>
+                <li>how to process results using a handler chain</li>
+                <li>how you can handle an error</li>
+            </ul>
+        </p>
+    </body>
+    <script>
+        /**
+         * Own Promise implementation for demo purposes
+         */
+         class MyPromise {
+            constructor(generateResults) {
+                this.thenHandlers = [];
+                this.catchHandler = null;
+                // Attention: bind(this) is required so that the resolve
+                // or reject method has a valid this reference!
+                const resolve = this.resolve.bind(this);
+                const reject = this.reject.bind(this);
+                setTimeout(function() {
+                    generateResults(resolve, reject);
+                }, 50);
+            }
+            resolve(value) {
+                let index = 0;
+                let result = value;
+
+                // call all registered then handlers
+                while (index < this.thenHandlers.length) {
+                    try {
+                        result = this.thenHandlers[index++](result);
+                    } catch (error) {
+                        if (this.catchHandler)
+                            this.catchHandler(error);
+                    }
+                }
+            }
+            reject(error) {
+                if (this.catchHandler) {
+                    this.catchHandler(error);
+                }
+            }
+            then(thenCallback) {
+                // register handler and return this for chaining
+                this.thenHandlers.push(thenCallback);
+                return this;
+            }
+            catch(catchCallback) {
+                this.catchHandler = catchCallback;
+            }
+        }
+       
+        /* Data source: Randomly returns a Person object or an error */
+        const getPerson = (resolve, reject) => {
+            const n = Math.floor(Math.random(1)*100);
+
+            if (n > 50) {
+                const name = "Name" + n;
+                const age = n-40;
+                resolve('{ "name": "' + name + '", "age": ' + age + ' }');
+            } else {
+                // error!
+                reject(new Error('no data!'));
+            }  
+        };
+
+        // create 10 promises and handle results
+        for (let i = 0; i < 10; i++) {
+            const promise = new MyPromise(getPerson);
+            promise
+            .then((jsonText) => {
+                // Convert result from string to JS object
+                return JSON.parse(jsonText);
+            })
+            .then((person) => {
+                // chack age
+                if (person.age > 40) {
+                    // too old - throw exception
+                    throw new Error("This person is too old, age = " + person.age);
+                }
+                console.log("name = " + person.name + ", age = " + person.age);
+            })
+            .catch((error) => {
+                // Handle errors if age is too high
+                console.error('Error: ' + error.message);
+            });
+        }
+    </script>
+</html>

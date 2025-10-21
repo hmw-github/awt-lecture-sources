@@ -1,16 +1,14 @@
 /**
- * Let's code the following program in JS:
- * - Anna is an Employee which is also a Person
- * - Persons have a name and an age
- * - an employee has all that plus an employee number
- * - each person as well as each employee has getters and setters 
- * - for all attributes and can produce a string representation
- * - test your code using the following main program:
+ * Code the following program
+	- Anna is an Employee which is also a Person
+	- Persons have a name and an age
+	- an employee has all that plus an employee number
+    each person as well as each employee has getters and setters for all attributes and can produce a string representation
  */
 
 class Person {
-  #name 
-  #age
+  #name; // the name of the person (private)
+  #age; // the age of the person (private)
 
   constructor(name, age) {
     this.#name = name;
@@ -20,17 +18,18 @@ class Person {
   get name() {
     return this.#name;
   }
+
   set name(value) {
     this.#name = value;
   }
 
   toString() {
-    return `name=${this.#name}, age=${this.#age}`;
+    return `name = ${this.#name}, age = ${this.#age}`;
   }
 }
 
 class Employee extends Person {
-  #nr
+  #nr; // employee number (private)
 
   constructor(name, age, nr) {
     super(name, age);
@@ -38,13 +37,22 @@ class Employee extends Person {
   }
 
   toString() {
-    return super.toString() + `, nr=${this.#nr}`;
+    return super.toString() + ", nr = " + this.#nr;
   }
 }
+/*
+const anna = new Employee("Anna", 21, 4711);
+console.log(anna.toString());
 
+if (
+  typeof process !== "undefined" &&
+  process.versions != null &&
+  process.versions.node != null
+) {
+  console.log("Running in Node.js");
+  module.exports = { Employee };
+} else {
+  console.log("Not running in Node.js (likely a browser)");
+}
 
-// main
-const anna = new Person('Anna', 23);
-console.log(anna.name);
-const annaEmployee = new Employee('Anna', 23, 4711);
-console.log(annaEmployee.toString());
+*/

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fetch Demo</title>
+    </head>
+    <body>
+        <h3>Fetch Demo</h3>
+        <p>Fetching data from https://jsonplaceholder.typicode.com/posts</p>
+        <output id="result">nothing yet</output>
+        <script>
+            fetch("https://jsonplaceholder.typicode.com/posts")
+            .then(function (response) {
+                // first step: check response
+                if (response.ok) {
+                    // forward to next step
+                    return response.json();
+                } else {
+                    // forward to catch clause
+                    throw new Error("HTTP error " + response.status);
+                }
+            })
+            .then(function (data) {
+                // second step: process data
+                console.log(data);
+                let postsAsString = '';
+
+                data.forEach((post) => {
+                    postsAsString += `${post.id}: ${post.title}<br>`;
+                });
+
+                document.getElementById('result').innerHTML = postsAsString;
+            })
+            .catch(function (error) {
+                console.log(error);
+                document.getElementById('result').innerHTML = error;
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<style>
+        p {
+            background-color: lightblue;
+        }
+    </style>
+    <script>
+        function handleButton1() {
+          // get 1st paragraph
+          const p = document.getElementById('my-paragraph');
+          p.innerHTML += ' new Text! ';
+        }
+        function handleButton2() {
+          let allParagraphs = document.getElementsByTagName('p');
+
+          for (let node of allParagraphs) {
+            node.innerHTML += ' added text';
+          }
+        }
+    </script>
+</head>
+<body>
+    <p id='my-paragraph'>My paragraph</p>
+    <p>Second Paragraph</p>
+    <button onclick='handleButton1()'>change 1st paragraph</button>
+    <button>change all paragraphs</button>
+</body>
+</html>
+<script>
+  let secondButton = document.getElementsByTagName('button')[1];
+  secondButton.addEventListener('click', function(event) {
+    handleButton2();
+  });
+</script>

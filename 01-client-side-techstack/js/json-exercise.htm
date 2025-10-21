@@ -1,0 +1,23 @@
+<html>
+<head></head>
+<body></body>
+<script src="./Employee.js"></script>
+<script>
+/**
+ * Describe Anna (from class example) in JSON and store the data in localStorage
+ * Load "anna" back in and recreate the Employee object!
+ */
+//var anna = new Employee('Anna', 23, 4711);
+var annaJSON = {
+  "name": "Anna",
+  "age": 23,
+  "nr": 4711
+}
+// store key/value pair 
+localStorage.anna = JSON.stringify(annaJSON);
+// Load "anna" back in and recreate the Employee object!
+let annaString = localStorage.anna;
+let anna = JSON.parse(annaString); // create JSON object from string
+let annaEmployee = new Employee(anna.name, anna.age, anna.nr);
+</script>
+</html>

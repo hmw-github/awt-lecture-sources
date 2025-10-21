@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div id="server-text">server reply will be here...</div>
+    <script>
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4) {
+                if (xmlhttp.status == 200) {
+                    console.log(xmlhttp.responseText);
+                    const div = document.getElementById("server-text");
+                    div.innerHTML = xmlhttp.responseText;
+                } else {
+                    console.error("Error (" + xmlhttp.status + "): "
+                        + xmlhttp.responseText);
+                    alert(xmlhttp.status);
+                }
+            }
+        };
+        xmlhttp.open("GET", "https://online-lectures-cs.thi.de/chat/test.txt", true);
+        xmlhttp.send();
+    </script>
+</body>
+</html>
