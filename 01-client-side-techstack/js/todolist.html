@@ -2,16 +2,22 @@
 <html>
   <head>
     <title>My todos</title>
+    <style>
+      .hidden {
+        display: none;
+      }
+    </style>
   </head>
   <body>
     <h1>My Todo List</h1>
     <label for="new-todo">new todo:</label>
     <input id="new-todo" type="text" placeholder="describe todo...">
-    <button>add</button>
+    <button id="add-button">add</button>
     <hr>
     <h3>Current Todos</h3>
     <ul id="todo-list">
     </ul>
+    <output id="message" class="hidden">No todos - enjoy your day!</output>
   </body>
   <script>
     var todos = [
@@ -28,22 +34,44 @@
     function displayTodos() {
       const ul = document.getElementById('todo-list');
       ul.innerHTML = '';
-      todos.forEach(todo => {
-        if (!todo.done) {
-          const newLi = document.createElement('LI');
-          newLi.innerHTML = `${todo.description}`;
-          const button = document.createElement('button');
-          button.innerHTML = 'done';
-          button.onclick = function() {
-            todo.done = true;
-            displayTodos();
-          }
-          newLi.appendChild(button);
-          ul.appendChild(newLi);
+      const openTodos = todos.filter(t => !t.done);
+
+      if (openTodos.length == 0) {
+        document.getElementById("message").classList.remove("hidden");
+        return;
+      }
+
+      document.getElementById("message").classList.add("hidden");
+
+      openTodos.forEach(todo => {
+        const newLi = document.createElement('LI');
+        newLi.innerHTML = `${todo.description} `;
+        const button = document.createElement('button');
+        button.innerHTML = 'done';
+        button.onclick = function() {
+          todo.done = true;         
+          displayTodos();
         }
+        newLi.appendChild(button);
+        ul.appendChild(newLi);
       });
     }
 
+    const addButton = document.getElementById("add-button");
+    addButton.addEventListener('click', function() {
+      const descriptionField = document.getElementById("new-todo");
+      const description = descriptionField.value;
+
+      if (description.trim() != '') {
+        const newTodo = { 
+          description: description,
+          done: false
+        };
+        todos.push(newTodo);
+        displayTodos();
+        descriptionField.value = '';
+      }
+    });
     displayTodos();
   </script>
 </html>
