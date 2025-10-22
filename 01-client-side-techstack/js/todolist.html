@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My todos</title>
+  </head>
+  <body>
+    <h1>My Todo List</h1>
+    <label for="new-todo">new todo:</label>
+    <input id="new-todo" type="text" placeholder="describe todo...">
+    <button>add</button>
+    <hr>
+    <h3>Current Todos</h3>
+    <ul id="todo-list">
+    </ul>
+  </body>
+  <script>
+    var todos = [
+      { 
+        description: "go shopping",
+        done: false
+      },
+      { 
+        description: "clean room",
+        done: false
+      }
+    ];
+
+    function displayTodos() {
+      const ul = document.getElementById('todo-list');
+      ul.innerHTML = '';
+      todos.forEach(todo => {
+        if (!todo.done) {
+          const newLi = document.createElement('LI');
+          newLi.innerHTML = `${todo.description}`;
+          const button = document.createElement('button');
+          button.innerHTML = 'done';
+          button.onclick = function() {
+            todo.done = true;
+            displayTodos();
+          }
+          newLi.appendChild(button);
+          ul.appendChild(newLi);
+        }
+      });
+    }
+
+    displayTodos();
+  </script>
+</html>

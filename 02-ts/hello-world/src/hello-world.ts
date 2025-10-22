@@ -4,3 +4,4 @@ function getMessage(name: string) {
 }
 
 console.log(getMessage('world'));
+

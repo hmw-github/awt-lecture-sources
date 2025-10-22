@@ -18,3 +18,8 @@ Run `npm start` to execute your code with ts-node.
 To build your project, you can run `npm run build` which will run tsc and store the JS files in the dist folder.
 
 This is useful when you want to serve the JS files to a browser to be executed on the client side.
+
+## Debugging your code
+
+- set breakpoints to make your program stop at interesting code lines 
+- use the "Run" menu and select "Start Debugging" => execution will stop at one of the breakpoints
