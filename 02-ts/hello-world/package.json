@@ -1,0 +1,25 @@
+{
+  "name": "hello-world",
+  "version": "1.0.0",
+  "main": "hello-world.ts",
+  "scripts": {
+    "start": "ts-node src/hello-world.ts",
+    "dev": "nodemon src/hello-world.ts",
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.5.5",
+    "nodemon": "^3.1.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  }
+}
