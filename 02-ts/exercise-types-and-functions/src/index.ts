@@ -8,7 +8,7 @@ import {
   PaymentMethod,
   Result,
   RentableProduct
-} from "./type-definitions.js";
+} from "./type-definitions.ts";
 
 /* =========================================================
     1. Create Sample Data
