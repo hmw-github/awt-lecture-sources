@@ -1,0 +1,8 @@
+### Test GET /hello endpoint
+GET http://localhost:3000/hello HTTP/1.1
+
+### Test server root (should return 404)
+GET http://localhost:3000/ HTTP/1.1
+
+### Test non-existent endpoint (should return 404)
+GET http://localhost:3000/nonexistent HTTP/1.1
