@@ -1,0 +1,6 @@
+@url = http://localhost:3000/
+### call GET /
+GET {{url}}
+
+### GET /hello/Anna
+GET {{url}}hello/Anna
