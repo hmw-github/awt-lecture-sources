@@ -12,7 +12,7 @@ const findOrders = () => {
   return orders;
 }
 
-const findOrderById = (id: number) => {
+const findOrderById = (id: number): Order | undefined => {
   return orders.find(order => order.id === id);
 };
 

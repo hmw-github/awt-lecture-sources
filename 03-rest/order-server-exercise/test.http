@@ -21,11 +21,11 @@ Content-Type: application/json
   "positions": []
 }
 ### check new order ** copy new id into variable **
-@orderID = 1726818243973
+@orderID = 1763463932189
 GET http://localhost:3000/api/order/{{orderID}}
 
 ### update order
-PUT http://localhost:3000/api/order
+PUT http://localhost:3000/api/order/{{orderID}}
 Content-Type: application/json
 
 {
@@ -48,8 +48,8 @@ POST http://localhost:3000/api/order/1/position
 Content-Type: application/json
 
 {
-  "nr": 3,
-  "article": "Apple Watch",
+  "nr": 4,
+  "article": "Apple Watch for Friend",
   "amount": 1
 }
 ### verify new positions for order 1

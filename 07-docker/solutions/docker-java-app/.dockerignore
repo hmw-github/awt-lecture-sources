@@ -1,0 +1,13 @@
+*.class
+*.jar
+.git
+.gitignore
+README.md
+Dockerfile*
+.dockerignore
+target/
+build/
+bin/
+.settings/
+.project
+.classpath
