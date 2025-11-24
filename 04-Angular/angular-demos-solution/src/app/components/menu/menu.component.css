@@ -1,0 +1,15 @@
+p {
+  width: 400px;
+  padding: 10px;
+  border-radius: 3px;
+  border: 1px solid gray;
+  margin: 1px;
+}
+
+p:hover {
+  background-color: lightgray;
+}
+
+a:link {
+  text-decoration: none;
+}

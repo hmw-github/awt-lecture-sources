@@ -1,0 +1,35 @@
+.message {
+    color: gray;
+}
+
+.login-form {
+    border: 1px solid black;
+    width: 500px;
+    text-align: center;
+    padding: 20px 20px;
+}
+
+.login-button {
+    width: 140px;
+    margin-left: 20px;
+}
+
+.error-message {
+    color: red;
+}
+
+.centered {
+    text-align: center;
+}
+
+.login-frame {
+    display: block;
+    padding: 20px;
+}
+
+.top-container {
+    border: 1px solid lightgray;
+    padding: 10px;
+    margin: 20px;
+    width: 530px;
+}

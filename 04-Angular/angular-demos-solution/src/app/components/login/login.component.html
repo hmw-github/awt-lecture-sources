@@ -1,0 +1,85 @@
+<div class="container top-container">
+  <h4>Login</h4>
+  <form class="login-form" #loginForm="ngForm">
+    <div class="login-frame" [ngStyle]="{'background-color': color}">
+      <div class="form-group row">
+        <label class="control-label col-sm-4" for="username">Username</label>
+        <div class="col-sm-8">
+          <input id="username" type="text" name="uname" [(ngModel)]="username"
+            required #uname="ngModel" (keyup)='keyup()'>
+        </div>
+        @if (!uname.pristine && !uname.valid) {
+          <div class="error-message">
+            <!-- div [hidden]="username.pristine || username.valid" class="error-message" -->
+            Please enter a username!
+          </div>
+        }
+      </div>
+      <div class="form-group row mt-2">
+        <label class="control-label col-sm-4" for="password">Passwort</label>
+        <div class="col-sm-8">
+          <input id="password" type="password" name="pwd" [(ngModel)]="password"
+            required #pwd="ngModel" (keyup)='keyup()'>
+        </div>
+        <div [hidden]="pwd.pristine || pwd.valid" class="error-message">
+          Please enter a password!
+        </div>
+      </div>
+      <div class="form-group row mt-2">
+        <label class="control-label col-sm-4" for="email">Email</label>
+        <div class="col-sm-8">
+          <input id="email" type="email" name="email" [(ngModel)]="emailAddress"
+            required #email="ngModel" (keyup)='keyup()' email>
+        </div>
+        @if (email.touched && !email.valid) {
+          <div class="error-message">
+            @if (email.errors?.['required']) {
+              <small>Please enter your email!</small>
+            }
+            @if (email.errors?.['email']) {
+              <small>Invalid email format!</small>
+            }
+          </div>
+        }
+      </div>
+      <div class="form-group row mt-3">
+        <div class="col-sm-12 centered">
+          <button type="button" class="btn btn-secondary login-button" (click)="cancel()">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-primary login-button" (click)="login(loginForm)"
+            [disabled]="!loginForm.valid">
+            Login
+          </button>
+        </div>
+      </div>
+      <div class="error-message">
+        {{ message }}
+      </div>
+    </div>
+    <hr>
+      <div class="form-group row">
+        <label class="control-label col-sm-6" for="farbe">Background color of dialog:</label>
+        <div class="col-sm-6">
+          <input type="color" name="color" [(ngModel)]="color">
+        </div>
+      </div>
+      <div class="message">
+        <h5>Form state: {{ loginForm.status }}</h5>
+        <table class="table">
+          <tr><th>Nr</th><th>Name</th><th>State</th><th>Pristine</th></tr>
+          @for (key of keys(loginForm); track key; let nr = $index) {
+            <tr>
+              <td>{{ nr }}</td>
+              <td>{{ key }}</td>
+              <td>{{ loginForm.controls[key].status }}</td>
+              <td>{{ loginForm.controls[key].pristine }}</td>
+            </tr>
+          }
+        </table>
+      </div>
+      <div class="message">
+        Chosen color: {{ color }}
+      </div>
+    </form>
+  </div>

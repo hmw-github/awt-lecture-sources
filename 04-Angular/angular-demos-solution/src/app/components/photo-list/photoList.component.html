@@ -1,0 +1,37 @@
+<div class="container top-container">
+  <h3>Photo List</h3>
+  <p>
+    The photos are loaded from {{ getURL() }}. All photos are loaded and displayed.
+  </p>
+
+  @if (photos) {
+    <div class="display-label">
+      <p>
+        {{ noLoaded }} photos loaded.
+      </p>
+      @if (photos != null) {
+        <table class="table table-striped small-table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Title</th>
+              <th>Thumbnail</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (photo of photos; track photo; let nr = $index) {
+              <tr>
+                <td>{{ photo.id }}</td>
+                <td>{{ photo.title }}</td>
+                <td><img class="thumbnail" [src]="photo.thumbnailUrl"></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  }
+  @else {
+    ...loading
+  }
+</div>

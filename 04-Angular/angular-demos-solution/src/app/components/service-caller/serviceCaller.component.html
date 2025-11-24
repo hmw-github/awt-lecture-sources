@@ -1,0 +1,54 @@
+<div class="container top-container">
+  <h3>Calling a Service</h3>
+  <p>
+    The photos are loaded from {{ getURL() }}. All photos are loaded, but only the number entered is displayed.
+  </p>
+
+  <form>
+    <div class="form-group row">
+      <label class="control-label col-5">Number of photos to display: </label>
+      <div class="col-7">
+        <input type="number" [(ngModel)]="noPhotos" name="noPhotos">
+      </div>
+    </div>
+    <div class="buttons">
+      <div>
+        <button class="btn btn-warning" (click)="show()"
+        [disabled]="noPhotos <= 0">Show</button>
+      </div>
+      <div>
+        <button class="btn btn-secondary" (click)="back()">Back to menu</button>
+      </div>
+    </div>
+  </form>
+
+  @if (photos) {
+    <div class="display-label">
+      <p>
+        {{ noLoaded }} photos loaded.
+      </p>
+      @if (photos != null) {
+        <table class="table table-striped small-table">
+          <thead>
+            <tr>
+              <th>Nr</th>
+              <th>Id</th>
+              <th>Title</th>
+              <th>Thumbnail</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (photo of photos; track photo; let nr = $index) {
+              <tr>
+                <td>{{ nr+1 }}</td>
+                <td>{{ photo.id }}</td>
+                <td>{{ photo.title }}</td>
+                <td><img class="thumbnail" [src]="photo.thumbnailUrl"></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  }
+</div>

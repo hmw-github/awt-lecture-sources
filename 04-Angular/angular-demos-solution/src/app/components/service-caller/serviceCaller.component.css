@@ -1,0 +1,41 @@
+.small-table {
+    width: 100%;
+}
+
+.display-label {
+    margin-top: 20px;
+}
+
+.thumbnail {
+    width: 70px;
+    height: 70px;
+}
+
+.top-container {
+    border: 1px solid lightgray;
+    padding: 10px;
+    margin: 20px;
+    width: 80%;
+}
+
+form {
+    margin-top:  20px;
+}
+
+form > .row {
+    padding-left: 20px;
+}
+
+.buttons {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons button {
+  width: 200px;
+}
+
+button[disabled] {
+  background-color: rgb(249, 246, 246);
+}
