@@ -6,7 +6,8 @@ import { Hello } from "./hello/hello";
   selector: 'app-root',
   imports: [Hello],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
+  standalone: true
 })
 export class App {
   protected title = 'demo1';

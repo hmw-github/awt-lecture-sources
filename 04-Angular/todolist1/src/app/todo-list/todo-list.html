@@ -1,0 +1,10 @@
+<ul>
+  @for(todo of todolist; track todolist) {
+    @if (todo.status == 'open') {
+      <li>
+        {{ todo.description }}
+        <button (click)="close(todo)">close</button>
+      </li>
+    }
+  }
+</ul>

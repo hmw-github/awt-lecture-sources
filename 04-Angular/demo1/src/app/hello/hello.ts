@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
   imports: [],
   templateUrl: './hello.html',
   styleUrl: './hello.css',
+  standalone: true
 })
 export class Hello {
   name: string = 'Anna';
