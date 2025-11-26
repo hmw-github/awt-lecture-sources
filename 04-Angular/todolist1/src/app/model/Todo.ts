@@ -1,4 +1,6 @@
 export class Todo {
-  constructor(public description: string, public status: string) {
+  constructor(public id: number, public description: string, public status: string) {
+    if (Number.isNaN(id))
+      this.id = Math.trunc(Math.random()*100000);
   }
 }
