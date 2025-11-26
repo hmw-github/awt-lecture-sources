@@ -1,0 +1,5 @@
+<h2>My Todo List</h2>
+<app-add-todo [todos]="todos" (todoCreated)="addTodo($event)"></app-add-todo>
+<hr>
+<h3>Current Todos</h3>
+<app-todo-list [todos]="todos" (statusChanged)="closeTodo($event)"></app-todo-list>

@@ -1,0 +1,13 @@
+@if (openTodos.length == 0) {
+  <p>You got no todos - enjoy your day!</p>
+}
+@else {
+  <ul>
+    @for(todo of openTodos; track todo) {
+      <li>
+        {{ todo.description }}
+        <button (click)="close(todo)">close</button>
+      </li>
+    }
+  </ul>
+}

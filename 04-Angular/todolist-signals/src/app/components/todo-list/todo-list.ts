@@ -1,4 +1,4 @@
-import { Component, computed, Input, OnInit, WritableSignal } from '@angular/core';
+import { Component, computed, effect, Input, OnInit, WritableSignal } from '@angular/core';
 import { Todo } from '../../model/Todo';
 
 @Component({
@@ -20,6 +20,10 @@ export class TodoList {
   );
 
   constructor() {
+    effect(() => {
+      // demonstrates the use of effect... (not needed here)
+      console.log('Todos changed:', this.todos());
+    });
   }
 
   close(todo: Todo) {
