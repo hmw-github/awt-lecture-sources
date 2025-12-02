@@ -1,0 +1,15 @@
+<span
+  [ngClass]="classList">
+  @if (status === 'pending') {
+    <span class="flex justify-center items-center">
+      Pending
+      <span class="material-symbols-outlined ml-1 w-4 text-gray-500">schedule</span>
+    </span>
+  }
+  @if (status === 'paid') {
+    <span class="flex justify-center items-center">
+      Paid
+      <span class="material-symbols-outlined ml-1 w-4 text-white">check</span>
+    </span>
+  }
+</span>

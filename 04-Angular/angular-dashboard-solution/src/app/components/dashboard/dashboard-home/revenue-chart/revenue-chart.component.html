@@ -1,0 +1,36 @@
+@if (!loading) {
+  <div>
+    <div class="w-full flex-col md:col-span-4">
+      <h2 class="mb-4 text-xl md:text-2xl">
+        Recent Revenue
+      </h2>
+      <div class="rounded-xl bg-gray-50 p-4">
+        <div class="sm:grid-cols-13 mt-0 grid grid-cols-12 items-end gap-2 rounded-md bg-white p-4 md:gap-4">
+          <!--div class="mb-6 hidden flex-col justify-between text-sm text-gray-400 sm:flex"
+          [ngStyle]="chartHeightStyle()">
+          <p *ngFor="let label of yAxisLabels">
+            {{ label }}
+          </p>
+        </div-->
+        @for (value of revenues; track value) {
+          <div class="flex flex-col items-center gap-2">
+            <div class="w-full rounded-md bg-blue-300" [ngStyle]="blockStyle(value.revenue)"></div>
+            <p class="-rotate-90 text-sm text-gray-400 sm:rotate-0">
+              {{value.month}}
+            </p>
+          </div>
+        }
+      </div>
+      <div class="flex items-center pb-2 pt-6">
+        <span class="material-symbols-outlined ml-2 text-sm text-gray-500">
+          calendar_month
+        </span>
+        <h3 class="ml-2 text-sm text-gray-500 ">Last 12 months</h3>
+      </div>
+    </div>
+  </div>
+</div>
+}
+@else {
+  <app-skeleton type="RevenueChartSkeleton"/>
+}

@@ -1,0 +1,23 @@
+<div class="inline-flex">
+  <!-- arrow left -->
+  <a (click)="gotoPage(currentPage - 1, currentPage <= 1)">
+    <span [ngClass]="arrowClasses('left', currentPage <= 1)">arrow_back</span>
+  </a>
+
+  <div class="flex -space-x-px">
+    @for (page of pages; track page; let i = $index) {
+      <a
+        [ngClass]="numberClasses(page, i)"
+        (click)="gotoPage(Number(page), currentPage === Number(page))">
+        {{page}}
+      </a>
+    }
+  </div>
+
+  <!-- right arrow -->
+  <a (click)="gotoPage(currentPage + 1, currentPage >= totalPages)">
+    <span [ngClass]="arrowClasses('right', currentPage >= totalPages)">
+      arrow_forward
+    </span>
+  </a>
+</div>
