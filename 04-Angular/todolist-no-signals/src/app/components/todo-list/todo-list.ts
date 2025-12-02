@@ -29,6 +29,7 @@ export class TodoList implements OnChanges {
 
     this.todos = this.todos.map(t => t.id === todo.id ? changedTodo : t);
     this.openTodos = this.todos.filter(todo => todo.status == 'open');
+    // not really necessary
     this.statusChanged.emit(changedTodo);
   }
 }

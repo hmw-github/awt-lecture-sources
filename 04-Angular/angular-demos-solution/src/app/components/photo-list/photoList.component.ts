@@ -15,6 +15,7 @@ export class PhotoListComponent implements OnInit  {
     public noLoaded: number = 0;
 
     public constructor(private location: Location, private dataService: DataService) {
+
     }
 
     public getURL(): string {

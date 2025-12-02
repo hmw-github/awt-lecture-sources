@@ -1,0 +1,16 @@
+{
+  "demo": {
+    "title": "ngx-translate Demo - angezeigt wird das im Browser eingestellte Locale: de",
+    "simple": {
+      "heading": "Einfache Übersetzungen ohne Parameter",
+      "text-with-pipe": "Text mit pipe-Zeichen",
+      "text-as-attribute": "Text mit Attribut",
+      "text-as-content": "Text als Inhalt"
+    },
+    "parameters": {
+      "heading": "Übersetzungen mit Parameter",
+      "text-with-pipe": "Text mit pipe-Zeichen: : die Nummer ist {{correctNumber}} (logisch!)"
+    },
+    "switch": "Zur Laufzeit umschalten:"
+  }
+}

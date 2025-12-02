@@ -8,6 +8,7 @@ import { RouterOutlet } from '@angular/router';
     RouterOutlet
   ],
   template: `
+    <h1>Current router outlet:</h1>
     <router-outlet></router-outlet>
     `
 })

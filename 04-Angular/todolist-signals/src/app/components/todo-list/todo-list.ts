@@ -30,9 +30,18 @@ export class TodoList {
     // the signal will call the arrow function we provide
     // here, we receive the old todos array and create a new one with one new todo
     // containing a changed status (other attributes are unchanged)
+    // this.todos.update(todos =>
+    //   todos.map(t =>
+    //     t.id === todo.id ? new Todo(todo.id, todo.description, 'closed') : t
+    //   )
+    // );
     this.todos.update(todos =>
-      todos.map(t =>
-        t.id === todo.id ? new Todo(todo.id, todo.description, 'closed') : t
+      todos.map(t => {
+        if (t.id === todo.id) {
+          t.status = 'closed';
+        }
+        return t;
+      }
       )
     );
   }

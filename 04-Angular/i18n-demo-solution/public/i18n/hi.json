@@ -1,0 +1,16 @@
+{
+  "demo": {
+    "title": "ngx-translate डेमो - आप अपने ब्राउज़र का डिफ़ॉल्ट लोकेल देख रहे हैं: hi",
+    "simple": {
+      "heading": "बिना पैरामीटर के सरल अनुवाद",
+      "text-with-pipe": "एक पाइप वाला पाठ",
+      "text-as-attribute": "एक गुण वाला पाठ",
+      "text-as-content": "एक पाठ सामग्री के साथ"
+    },
+    "parameters": {
+      "heading": "पैरामीटरों के साथ अनुवाद",
+      "text-with-pipe": "पाइप के साथ एक टेक्स्ट: संख्या {{correctNumber}} है (बेशक!)"
+    },
+    "switch": "रनटाइम पर स्विच करें:"
+  }
+}
