@@ -17,7 +17,8 @@ export class LatestInvoicesComponent {
 
   constructor(private backendService: BackendService) {
     this.loading = true;
-    this.backendService.fetchLatestInvoices().subscribe(invoices => {
+    this.backendService.fetchLatestInvoices()
+    .subscribe(invoices => {
       this.latestInvoices = invoices;
       this.loading = false;
     });

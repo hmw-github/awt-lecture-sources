@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class SubscriptionService {
+  // use Subjects to keep the data that others might want to observe
   searchTerm = new BehaviorSubject<string>('');
   currentPage = new BehaviorSubject<number>(1);
   totalPages = new BehaviorSubject<number>(0);
