@@ -1,0 +1,21 @@
+input, button {
+  margin-left: 5px;
+}
+
+p {
+  margin: 10px 0 20px 20px;
+  padding-bottom: 20px;
+}
+
+table, td, th {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+}
+
+tr>th {
+  background-color: #ccc;
+}
+
+tr>td {
+  background-color: white;
+}

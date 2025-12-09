@@ -1,0 +1,32 @@
+label {
+  margin-left: 20px;
+  width: 60px;
+  display: inline-block;
+}
+
+output {
+  margin: 0px 0px 20px 30px;
+  color: red;
+  display: block;
+}
+
+input {
+  margin-left: 20px;
+  margin-bottom: 5px;
+  width: 85%;
+}
+
+.input-container {
+  width: 90%;
+}
+
+@media (max-width: 768px) {
+  input {
+    margin: 5px 0 5px 20px;
+    width: 85%;
+  }    
+  output {
+    margin: 5px 5px 10px 30px;
+    color: red;
+  }  
+}
