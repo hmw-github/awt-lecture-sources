@@ -1,0 +1,9 @@
+input[type="text"]:focus {
+  border-color: blue;
+  outline: none;
+}
+
+input[type="text"].error {
+  border-color: red;
+}
+
