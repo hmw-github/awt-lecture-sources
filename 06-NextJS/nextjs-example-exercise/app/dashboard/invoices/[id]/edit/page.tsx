@@ -1,0 +1,38 @@
+import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
+import { fetchCustomers, fetchInvoiceById } from '@/app/lib/data';
+import { notFound } from 'next/navigation';
+ 
+export default async function Page({ params }: { params: { id: string } }) {
+  console.log('invoice id = ' + params.id);
+  const id = params.id;
+  /**
+   * call server twice in parallel and wait for call replies to arrive.
+   * This approach is faster than calling the server one call after another.
+   * We eliminate what is called a request waterfall, see also 
+   * https://nextjs.org/learn/dashboard-app/fetching-data#what-are-request-waterfalls
+   */
+  const [invoice, customers] = await Promise.all([
+    fetchInvoiceById(id),
+    fetchCustomers(),
+  ]);
+
+  if (!invoice) {
+    notFound();
+  }
+
+  return (
+    <main>
+      <Breadcrumbs
+        breadcrumbs={[
+          { label: 'Invoices', href: '/dashboard/invoices' },
+          {
+            label: 'Edit Invoice',
+            href: `/dashboard/invoices/${id}/edit`,
+            active: true,
+          },
+        ]}
+      />
+      
+    </main>
+  );
+}
