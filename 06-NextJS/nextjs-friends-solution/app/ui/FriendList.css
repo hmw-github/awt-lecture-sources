@@ -1,0 +1,19 @@
+.friend-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.friend {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  margin-bottom: 8px;
+  border: 1px solid #d9d7d7;
+  border-radius: 5px;
+}
+
+.friend-name {
+  width: 200px;
+}

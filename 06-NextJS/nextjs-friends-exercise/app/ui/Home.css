@@ -1,0 +1,7 @@
+.plus-button {
+  width: 30px;
+  align-self: flex-end;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1em;
+}

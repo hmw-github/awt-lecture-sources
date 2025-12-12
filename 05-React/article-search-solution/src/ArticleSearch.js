@@ -42,7 +42,7 @@ const ArticleSearch = () => {
 
   const handleSearchButton = () => {
     fetchData();
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
   let articleSearchTable = <p>loading data ...</p>; // display this if we are loading results

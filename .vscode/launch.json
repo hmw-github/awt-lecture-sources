@@ -10,6 +10,25 @@
       "cwd": "${workspaceFolder}",
       "preLaunchTask": "npm: build",
       "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "Next.js: debug server-side",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm run dev",
+      "cwd": "${workspaceFolder}/06-NextJS/nextjs-friends-exercise"
+    },
+    {
+      "name": "Next.js: debug full stack",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm run dev",
+      "cwd": "${workspaceFolder}/06-NextJS/nextjs-friends-exercise",
+      "serverReadyAction": {
+        "pattern": "- Local:.+(https?://.+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome"
+      }
     }
   ]
 }

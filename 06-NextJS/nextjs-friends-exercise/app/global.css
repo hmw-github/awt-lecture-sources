@@ -1,0 +1,91 @@
+/*
+
+add your CSS framework here, e.g. tailwind:
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*/
+
+.container {
+  margin: 20px auto;
+  width: 400px;
+  background-color: #ede9ed;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.vbox {
+  display: flex;
+  flex-direction: column;
+}
+
+.hbox {
+  display: flex;
+  flex-direction: row;
+  flex-flow: spre;
+}
+
+.button {
+  text-decoration: none;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  background-color: aliceblue;
+  font-size: 1em;
+  color: blue;
+  width: 80px;
+  text-align: center;
+}
+
+.button:hover {
+  background-color: blue;
+  color: white;
+  border: 2px solid black;
+}
+
+input[type="text"],
+input[type="number"] {
+  padding: 8px 12px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+  outline: none;
+  min-width: 200px;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+input[type="text"]:read-only {
+  background-color: #f5f5f5;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: red;
+}
+
+.form-row {
+  margin: 5px 0px 10px 0px;
+}
+
+.form-label {
+  display: inline-block;
+  width: 100px;
+}
+
+.hbox {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.mb-30 {
+  margin-bottom: 30px;
+}
