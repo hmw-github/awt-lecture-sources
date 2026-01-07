@@ -11,4 +11,6 @@ RUN javac -d /app/build ./Hello.java
 
 # start Hello class
 ENTRYPOINT ["java", "--class-path", "./build", "Hello"]
-CMD []
+# enter optional commands
+CMD [] 
+
