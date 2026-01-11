@@ -1,0 +1,22 @@
+services:
+  frontend:
+    build:
+      context: ./order-client
+      dockerfile: Dockerfile
+    ports:
+      - "8182:80"
+    depends_on:
+      - backend
+    restart: no
+    
+  backend:
+    build:
+      context: ./order-server
+      dockerfile: Dockerfile
+    ports:
+      - "8080" # don't expose port, only use internal port
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - "/app/node_modules"
+    restart: no

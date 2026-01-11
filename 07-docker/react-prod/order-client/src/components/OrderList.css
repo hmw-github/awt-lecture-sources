@@ -1,0 +1,27 @@
+.order-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.order-card {
+  padding: 5px 0px 0px 15px;
+  background: #f8f8f8;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.order-card h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+h2 {
+  margin-top: 5px;
+}
+
+.delete-button {
+  float: right;
+  margin-right: 10px;
+}

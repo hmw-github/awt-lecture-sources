@@ -1,0 +1,35 @@
+services:
+  # Nginx reverse proxy (client is unaware of backend servers)
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8181:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - /app/node_modules
+    depends_on:
+      - backend
+      - frontend
+    restart: no
+
+  # Node.js Backend Server
+  backend:
+    build: ./order-server
+    ports:
+      - "8080" # only internal port used; let docker assign a free port on host
+    volumes:
+      - ./order-server:/app
+      - /app/node_modules  # keep container's node_modules
+    restart: no
+
+  # React Frontend (for development)
+  frontend:
+    build: ./order-client
+    volumes:
+      - ./order-client:/app
+      - /app/node_modules  # keep container's node_modules
+    ports:
+      - "3000:3000" # needed for react dev environment in browser
+    restart: no
+    depends_on:
+      - backend

@@ -1,0 +1,21 @@
+<div class="order-list">
+  @for (order of orders(); track order.id) {
+    <div class="order-card">
+      <h2>Order {{order.id}}</h2>
+      <button type="button" class="delete-button" (click)="deleteOrder(order)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <p><strong>Customer:</strong> {{order.customer}}</p>
+      <p><strong>Date:</strong> {{formatOrderDate(order)}}</p>
+      <p><strong>Total:</strong> {{total(order)}}</p>
+      <ul>
+        @for (p of order.positions; track p.nr) {
+          <li>
+            #{{p.nr}} {{p.article}}:
+            {{p.amount}} x {{formatCurrency(p.price)}} = {{formatCurrency(p.amount * p.price)}}
+          </li>
+        }
+      </ul>
+    </div>
+  }
+</div>

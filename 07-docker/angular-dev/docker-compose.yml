@@ -1,0 +1,20 @@
+services:
+  frontend:
+    build: ./order-client
+    ports:
+      - "8183:4200"   # Angular dev server
+    volumes:
+      - ./order-client:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - backend
+
+  backend:
+    build: ./order-server
+    ports:
+      - "8080" # don't expose port to host (would cause conflicts)
+      - "9229:9229"  # Node.js debug port
+    volumes:
+      - ./order-server:/usr/src/app
+      - /app/node_modules
+    command: npm run dev

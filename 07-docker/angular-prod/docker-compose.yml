@@ -1,0 +1,16 @@
+services:
+  frontend:
+    build: ./order-client
+    ports:
+      - "8184:80"
+    restart: unless-stopped
+    depends_on:
+      - backend
+
+  backend:
+    build: ./order-server
+    ports:
+      - "8080" # don't expose port to host (would cause conflicts)
+    volumes:
+      - ./order-server:/app
+      - /app/node_modules

@@ -1,0 +1,75 @@
+### check if server is running
+GET http://localhost:8080
+
+### get all orders
+GET http://localhost:8080/api/order
+
+### get order 1
+GET http://localhost:8080/api/order/1
+
+
+### get invalid order 4711 -> should yield status 404
+GET http://localhost:8080/api/order/4711
+
+### create order
+POST http://localhost:8080/api/order
+Content-Type: application/json
+
+{
+  "customer": "Paula",
+  "date": 1752135456157,
+  "positions": []
+}
+### check new order ** copy new id into variable **
+@orderID = 1752137056760
+GET http://localhost:8080/api/order/{{orderID}}
+
+### update order
+PUT http://localhost:8080/api/order
+Content-Type: application/json
+
+{
+  "id": {{orderID}},
+  "customer": "Mohammed",
+  "date": "1728556440000"
+}
+
+### verify update
+GET http://localhost:8080/api/order/{{orderID}}
+
+### delete new order 
+DELETE http://localhost:8080/api/order/{{orderID}}
+
+### get positions for order 1
+GET http://localhost:8080/api/order/1/position
+
+### create new position for order 1
+POST http://localhost:8080/api/order/1/position
+Content-Type: application/json
+
+{
+  "nr": 3,
+  "article": "Apple Watch",
+  "amount": 1,
+  "price": 350.0
+}
+### verify new positions for order 1
+GET http://localhost:8080/api/order/1/position
+
+### update position 3 for order 1
+PUT http://localhost:8080/api/order/1/position
+Content-Type: application/json
+
+{
+  "nr": 3,
+  "article": "Apple Watch",
+  "amount": 2,
+  "price": "249.5"
+}
+### verify updated positions for order 1
+GET http://localhost:8080/api/order/1/position
+
+### delete position 3 for order 1
+DELETE http://localhost:8080/api/order/1/position/3
+### verify updated positions for order 1
+GET http://localhost:8080/api/order/1/position
