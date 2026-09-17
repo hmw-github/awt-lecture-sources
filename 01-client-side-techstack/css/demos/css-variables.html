@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    	<style>
+        :root {
+          --background: white;
+          --foreground: black; 
+          --border-color: red; 
+        }
+        body {
+          background-color: var(--background);
+          color: var(--foreground);
+        }
+        h2 {
+          border-bottom: 2px solid var(--border-color);
+        }
+        button {
+          background-color: lightgray;
+          color: var(--foreground);
+          border: 1px solid var(--border-color);
+          padding: 5px;
+        }
+
+	</style>
+	<script>
+        function setMode() {
+            const button = document.getElementById('mode-button');
+            const root = document.documentElement;
+            if (button.innerHTML == 'Dark Mode') {
+                button.innerHTML = 'Bright Mode';
+                root.style.setProperty('--background', 'black');
+                root.style.setProperty('--foreground', 'white');
+                root.style.setProperty('--border-color', 'yellow');        
+            } else {
+                button.innerHTML = 'Dark Mode'; 
+                root.style.setProperty('--background', 'white');
+                root.style.setProperty('--foreground', 'black');
+                root.style.setProperty('--border-color', 'red');        
+            }
+        }
+
+	</script>
+    </head>
+    <body>
+        <h1>Using the var() Function</h1>
+    <h2>Lorem Ipsum</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam at erat pulvinar, at pulvinar felis blandit.</p>
+    <p>
+    <button id='mode-button' onclick='setMode()'>Dark Mode</button>
+    </p>
+</body>
+    </html>

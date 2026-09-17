@@ -6,41 +6,6 @@
     each person as well as each employee has getters and setters for all attributes and can produce a string representation
  */
 
-class Person {
-  #name; // the name of the person (private)
-  #age; // the age of the person (private)
-
-  constructor(name, age) {
-    this.#name = name;
-    this.#age = age;
-  }
-
-  get name() {
-    return this.#name;
-  }
-
-  set name(value) {
-    this.#name = value;
-  }
-
-  toString() {
-    return `name = ${this.#name}, age = ${this.#age}`;
-  }
-}
-
-class Employee extends Person {
-  #nr; // employee number (private)
-
-  constructor(name, age, nr) {
-    super(name, age);
-    this.#nr = nr;
-  }
-
-  toString() {
-    return super.toString() + ", nr = " + this.#nr;
-  }
-}
-/*
 const anna = new Employee("Anna", 21, 4711);
 console.log(anna.toString());
 
@@ -54,5 +19,3 @@ if (
 } else {
   console.log("Not running in Node.js (likely a browser)");
 }
-
-*/

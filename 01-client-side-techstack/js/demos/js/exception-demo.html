@@ -1,0 +1,26 @@
+<script>
+  /**
+   * Demo of JS exception handling
+   */
+
+  /**
+   * Return square of parameter
+   * @param {*} n number
+   */
+  function square(n) {
+    if (typeof n !== "number")
+      //throw "not a number";
+      throw new Error("not a number");
+
+    return n ** 2;
+  }
+
+  try {
+    console.log(`square of 5: ${square(5)}`);
+    console.log(`square of 5: ${square("5")}`);
+    console.log(`square of 5: ${square("five")}`);
+  } catch (err) {
+    console.log(JSON.stringify(err.message));
+  }
+
+</script>

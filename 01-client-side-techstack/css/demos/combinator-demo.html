@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      output {
+        display: block;
+        margin: 10px;
+      }
+      div p {
+        color: blue;
+      }
+      div > p {
+        background-color: lightgray;
+      }
+      div + output {
+        color: red;
+      }
+      div ~ output {
+        border: 1px solid rgb(0, 36, 128);
+      }
+    </style>
+  </head>
+  <body>
+    <p>P outside of DIV</p>
+    <div>
+      <p>direct child (>): P inside a DIV</p>
+      <ul>
+        <li>First Element</li>
+        <li><p>descendant (space): Second Element: P in subtree of DIV</p></li>
+      </ul>
+    </div>
+    <output>adjacent sibling (+): Some text in OUTPUT tag after a DIV</output>
+    <output>general sibling (~): Some text in OUTPUT tag 2 after OUTPUT 1</output>
+  </body>
+</html>

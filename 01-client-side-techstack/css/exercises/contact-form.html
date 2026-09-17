@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+        <title>Contact</title>
+    <meta charset="UTF-8">
+    <style>
+        * {
+            font-family: Arial;
+        }
+    </style>
+</head>
+<body>
+    <h1>Contact Form</h1>
+    <form action="send.html">
+        <p>
+            <label for="name">Name:</label>
+            <input id="name" type="text" />
+        </p>
+
+        <p>
+            <label for="mail">E-Mail:</label>
+            <input id="mail" type="mail" />
+        </p>
+
+        <p>
+            <label for="subject">Subject:</label>
+            <input id="subject" type="text" />
+        </p>
+
+        <p>
+            <label for="text">Text:</label><br/>
+            <textarea id="text"></textarea>
+        </p>
+
+        <p>
+            <input id="copy" type="checkbox"/>
+            <label for="copy">Would you like to receive a copy of your email?</label><br/>
+        </p>
+
+        <p>
+            <input type="submit" value="Send">
+        </p>
+    </form>
+</body>
+</html>

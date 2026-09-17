@@ -1,0 +1,29 @@
+<html>
+
+<!-- when a paragraph is clicked, we add a * to its text -->
+
+<body>
+  <p id="firstParagraph">
+    First Paragraph untouched
+  </p>
+  <p id="secondParagraph">
+    Second Paragraph untouched
+  </p>
+</body>
+
+<script>
+  const p = document.getElementById('firstParagraph')
+  const p2 = document.getElementById('secondParagraph')
+  function eventListener(event, element) {
+    element.innerHTML = element.innerHTML + '*'
+  }
+
+  p.addEventListener('click', function (event) {
+    eventListener(event, p);
+  })
+  p2.addEventListener('click', e => eventListener(e, p2))
+
+  //document.getElementById('firstParagraph').addEventListener('click',eventListener);
+</script>
+
+</html>

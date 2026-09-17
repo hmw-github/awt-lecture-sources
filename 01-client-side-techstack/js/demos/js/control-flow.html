@@ -1,0 +1,33 @@
+<html>
+
+<body>
+  <p>Some Paragraph</p>
+  <div>
+    Some DIV
+  </div>
+</body>
+<script>
+  /* simple for loop with index */
+  document.writeln("index-based for-loop - numbers: ");
+  for (let i = 0; i < 5; i++)
+    document.writeln(" " + i);
+
+  /* iterate over object keys with for-in */
+  document.writeln("<br>Object keys with for-in loop:");
+  const obj = { name: "Paula", age: 23 };
+  for (let key in obj)
+    document.writeln(" " + key);
+
+  /* iterate over array elements with for-of */
+  document.writeln("<br>Array enumeration with for-of loop:");
+  const numbers = [5, 3, 1];
+  for (let n of numbers)
+    document.writeln(" " + n);
+
+  numbers.forEach((value, index) => {
+    console.log(`${value}:  ${index}`);
+  });
+
+</script>
+
+</html>

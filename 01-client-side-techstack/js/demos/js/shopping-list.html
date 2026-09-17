@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        #nr {
+            width: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <h4>Shopping List</p>
+
+        <ol id='list'></ol>
+
+        <p>
+            <button id="new-button">New Entry</button>
+        </p>
+        Nr: <input type='number' id='nr'>
+        <button id="delete-button">remove entry</button>
+</body>
+<script>
+    let articles = ['Milk', 'Butter', 'Fruit', 'Salad'];
+
+    /**
+     * Create new article entry for the list
+     */
+    function appendEntry() {
+        const list = document.getElementById('list');
+        // create LI element
+        const entry = document.createElement('li');
+        // create text node for LI element
+        const text = document.createElement('text');
+
+        // populate text node with random article from the list
+        text.textContent = randomArticle(articles);
+        // append text node to LI element
+        entry.appendChild(text);
+        // append LI element to the list element
+        list.appendChild(entry);
+    }
+
+    function deleteEntry() {
+        // read index the user input
+        const nr = document.getElementById('nr').value;
+        const list = document.getElementById('list');
+        try {
+            // user entered number 1..n, we need 0..n-1
+            const entry = list.childNodes[nr - 1];
+            // remove child
+            list.removeChild(entry);
+        }
+        catch (err) {
+            alert('Entry not found!');
+        }
+    }
+
+    /**
+     * 
+    */
+    function randomArticle(list) {
+        const nr = Math.trunc((Math.random() * list.length)) % list.length;
+        return list[nr];
+    }
+
+    // establish event listeners new and delete buttons
+    document.getElementById('new-button').addEventListener('click', function (event) {
+        appendEntry();
+    });
+    document.getElementById('delete-button').addEventListener('click', function (event) {
+        deleteEntry();
+    });
+</script>
+
+</html>
