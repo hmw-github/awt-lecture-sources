@@ -13,5 +13,7 @@ Run `npm start` to execute your js code with node.
 
 ## Debugging your code
 
-- set breakpoints to make your program stop at interesting code lines 
-- use the "Run" menu and select "Start Debugging" => execution will stop at one of the breakpoints
+- set breakpoints to make your program stop at interesting TS code lines 
+- build the project with `npm run build`
+- open a Java Script Debug Console in VS Code and cd into the project
+- run `npm start`, execution should stop at the first breakpoint

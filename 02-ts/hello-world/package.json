@@ -3,14 +3,23 @@
   "version": "1.0.0",
   "main": "hello-world.ts",
   "scripts": {
-    "start": "ts-node src/hello-world.ts",
+    "start": "tsx src/hello-world.ts",
     "dev": "nodemon src/hello-world.ts",
     "build": "tsc"
   },
   "author": "",
   "license": "ISC",
   "description": "",
+  "engines": {
+    "node": ">=24 <25"
+  },
   "dependencies": {
     "nodemon": "^3.1.10"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.5",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.23.13",
+    "typescript": "^5.9.3"
   }
 }

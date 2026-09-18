@@ -12,6 +12,17 @@
       "skipFiles": ["<node_internals>/**"]
     },
     {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug exercise-types-and-functions/index.ts",
+      "runtimeArgs": ["--loader", "ts-node/esm"],
+      "args": ["${workspaceFolder}/02-ts/exercise-types-and-functions/src/index.ts"],
+      "cwd": "${workspaceFolder}/02-ts/exercise-types-and-functions",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
       "name": "Next.js: debug server-side",
       "type": "node-terminal",
       "request": "launch",
