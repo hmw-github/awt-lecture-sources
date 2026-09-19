@@ -1,11 +1,11 @@
 import { NgClass } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-  selector: 'app-invoice-status',
-  standalone: true,
-  imports: [NgClass],
-  templateUrl: './invoice-status.component.html',
+    selector: 'app-invoice-status',
+    imports: [NgClass],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    templateUrl: './invoice-status.component.html'
 })
 export class InvoiceStatusComponent implements OnInit{
   @Input() status!: string;

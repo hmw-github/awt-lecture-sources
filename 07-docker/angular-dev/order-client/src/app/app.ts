@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { OrderForm } from './components/order-form/order-form';
 import { OrderList } from './components/order-list/order-list';
 import { Order } from './models/Order';
@@ -9,6 +9,7 @@ import { Server } from './services/server';
   standalone: true,
   imports: [OrderForm, OrderList],
   templateUrl: './app.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app.css'
 })
 export class App implements OnInit {

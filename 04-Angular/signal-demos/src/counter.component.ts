@@ -1,8 +1,9 @@
-import { Component, effect, Input, WritableSignal } from '@angular/core';
+import { Component, effect, Input, WritableSignal, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-counter',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div>
       <h2>Count: {{ count() }}</h2>

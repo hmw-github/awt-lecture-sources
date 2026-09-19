@@ -1,13 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DebounceService } from '../../../services/debounce.service';
 import { SubscriptionService } from '../../../services/subscription.service';
 
 @Component({
-  selector: 'app-search',
-  standalone: true,
-  imports: [FormsModule],
-  templateUrl: './search.component.html',
+    selector: 'app-search',
+    imports: [FormsModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    templateUrl: './search.component.html'
 })
 export class SearchComponent implements OnInit {
   @Input() placeholder!: string;

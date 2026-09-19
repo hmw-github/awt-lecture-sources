@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SearchComponent } from '../../shared/search/search.component';
 import { InvoiceTableComponent } from "./invoices-table/invoices-table.component";
 import { PaginationComponent } from "../../shared/pagination/pagination.component";
@@ -7,10 +7,10 @@ import { SubscriptionService } from '../../../services/subscription.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-invoices',
-  standalone: true,
-  imports: [SearchComponent, InvoiceTableComponent, PaginationComponent],
-  templateUrl: './invoices.component.html',
+    selector: 'app-invoices',
+    imports: [SearchComponent, InvoiceTableComponent, PaginationComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    templateUrl: './invoices.component.html'
 })
 export class InvoicesComponent implements OnInit {
   totalPages!: number;

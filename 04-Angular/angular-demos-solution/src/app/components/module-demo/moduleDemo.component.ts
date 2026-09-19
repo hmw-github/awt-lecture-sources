@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Location } from '@angular/common';
 import { DemoModule } from '../../modules/demo.module';
 
@@ -6,7 +6,7 @@ import { DemoModule } from '../../modules/demo.module';
     selector: 'app-module-demo',
     templateUrl: './moduleDemo.component.html',
     styleUrls: ['./moduleDemo.component.css'],
-    standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [DemoModule]
 })
 export class ModuleDemoComponent implements OnInit {

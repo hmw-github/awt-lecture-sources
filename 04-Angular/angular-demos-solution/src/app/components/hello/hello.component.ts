@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-hello',
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
       <div class="container mt-3">
         <h2>Hello {{ name + '?' }}, {{ greeting }}!</h2>

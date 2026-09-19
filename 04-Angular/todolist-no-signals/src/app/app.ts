@@ -1,4 +1,4 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { Component, signal, WritableSignal, ChangeDetectionStrategy } from '@angular/core';
 import { Todo } from './model/Todo';
 import { AddTodo } from './components/add-todo/add-todo';
 import { TodoList } from './components/todo-list/todo-list';
@@ -8,6 +8,7 @@ import { TodoList } from './components/todo-list/todo-list';
   imports: [AddTodo, TodoList],
   templateUrl: './app.html',
   styleUrl: './app.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true
 })
 export class App {

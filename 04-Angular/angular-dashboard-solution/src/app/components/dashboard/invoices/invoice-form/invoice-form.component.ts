@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { BackendService } from '../../../../services/backend.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Customer } from '../../../../models/Customer';
@@ -18,10 +18,10 @@ export function minZeroValidator(): ValidatorFn {
 }
 
 @Component({
-  selector: 'app-invoice-form',
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
-  templateUrl: './invoice-form.component.html',
+    selector: 'app-invoice-form',
+    imports: [FormsModule, ReactiveFormsModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    templateUrl: './invoice-form.component.html'
 })
 export class InvoiceFormComponent implements OnInit {
   formatCurrency = formatCurrency;

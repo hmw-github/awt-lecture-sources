@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { BackendService } from '../../../../services/backend.service';
 
 import { SkeletonComponent } from "../../../shared/skeleton/skeleton.component";
@@ -9,10 +9,10 @@ class CardDescription {
 }
 
 @Component({
-  selector: 'app-cards',
-  standalone: true,
-  imports: [SkeletonComponent],
-  templateUrl: './cards.component.html',
+    selector: 'app-cards',
+    imports: [SkeletonComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    templateUrl: './cards.component.html'
 })
 export class CardsComponent implements OnInit {
   loading: boolean = true;

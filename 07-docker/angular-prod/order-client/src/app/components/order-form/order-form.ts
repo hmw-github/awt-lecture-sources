@@ -1,4 +1,4 @@
-import { Component, Input, WritableSignal } from '@angular/core';
+import { Component, Input, WritableSignal, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Position } from '../../models/Position';
 import { Server } from '../../services/server';
@@ -9,6 +9,7 @@ import { Order } from '../../models/Order';
   imports: [FormsModule],
   standalone: true,
   templateUrl: './order-form.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './order-form.css'
 })
 export class OrderForm {

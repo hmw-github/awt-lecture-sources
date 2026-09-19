@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-menu',
-    standalone: true,
     imports: [
-      RouterLink
+        RouterLink
     ],
     templateUrl: './menu.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {

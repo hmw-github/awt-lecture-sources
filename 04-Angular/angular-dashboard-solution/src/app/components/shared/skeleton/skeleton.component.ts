@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-  selector: 'app-skeleton',
-  standalone: true,
-  imports: [],
-  templateUrl: './skeleton.component.html',
-  styleUrls: [ './skeleton.component.css' ]
+    selector: 'app-skeleton',
+    imports: [],
+    templateUrl: './skeleton.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./skeleton.component.css']
 })
 export class SkeletonComponent {
   @Input() type: string = 'n/a';

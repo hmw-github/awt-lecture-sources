@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { Todo } from '../../model/Todo';
 
 @Component({
@@ -6,6 +6,7 @@ import { Todo } from '../../model/Todo';
   imports: [],
   templateUrl: './todo-list.html',
   styleUrl: './todo-list.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true
 })
 export class TodoList implements OnChanges {

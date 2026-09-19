@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Location } from '@angular/common';
 import { Student } from '../../models/Student';
 import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-manage-students',
-    standalone: true,
     imports: [
-    FormsModule
-],
+        FormsModule
+    ],
     templateUrl: './manage-students.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./manage-students.component.css']
 })
 export class ManageStudentsComponent implements OnInit {

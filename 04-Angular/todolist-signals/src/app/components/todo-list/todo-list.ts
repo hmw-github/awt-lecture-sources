@@ -1,4 +1,4 @@
-import { Component, computed, effect, Input, OnInit, WritableSignal } from '@angular/core';
+import { Component, computed, effect, Input, OnInit, WritableSignal, ChangeDetectionStrategy } from '@angular/core';
 import { Todo } from '../../model/Todo';
 
 @Component({
@@ -6,6 +6,7 @@ import { Todo } from '../../model/Todo';
   imports: [],
   templateUrl: './todo-list.html',
   styleUrl: './todo-list.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true
 })
 export class TodoList {

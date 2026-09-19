@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Location } from '@angular/common';
 import { Photo } from '../../models/Photo';
 import { FormsModule } from '@angular/forms';
@@ -6,11 +6,11 @@ import { DataService } from '../../services/dataService.service';
 
 @Component({
     selector: 'app-service-caller',
-    standalone: true,
     imports: [
-    FormsModule
-],
+        FormsModule
+    ],
     templateUrl: './serviceCaller.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./serviceCaller.component.css']
 })
 export class ServiceCallerComponent  {

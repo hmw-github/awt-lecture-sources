@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Hello } from "./hello/hello";
 
@@ -7,6 +7,7 @@ import { Hello } from "./hello/hello";
   imports: [Hello],
   templateUrl: './app.html',
   styleUrl: './app.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true
 })
 export class App {

@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-login-form',
-  standalone: true,
-  imports: [FormsModule],
-  templateUrl: './login-form.component.html',
+    selector: 'app-login-form',
+    imports: [FormsModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    templateUrl: './login-form.component.html'
 })
 export class LoginFormComponent {
   email: string = 'user@mail.com';

@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Location } from '@angular/common';
 import { SquareNumber } from '../../models/SquareNumber';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-square-numbers',
-  standalone: true,
-  imports: [FormsModule],
-  templateUrl: './square-numbers.component.html',
-  styleUrls: ['./square-numbers.component.css'],
+    selector: 'app-square-numbers',
+    imports: [FormsModule],
+    templateUrl: './square-numbers.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./square-numbers.component.css']
 })
 export class SquareNumbersComponent {
   noSquares!: number;

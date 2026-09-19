@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { formatCurrency, formatDateToLocal } from '../../../../utils';
 
 import { BackendService, ITEMS_PER_PAGE } from '../../../../services/backend.service';
@@ -8,10 +8,10 @@ import { SubscriptionService } from '../../../../services/subscription.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-invoices-table',
-  standalone: true,
-  imports: [InvoiceStatusComponent],
-  templateUrl: './invoices-table.component.html',
+    selector: 'app-invoices-table',
+    imports: [InvoiceStatusComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    templateUrl: './invoices-table.component.html'
 })
 export class InvoiceTableComponent implements OnInit {
   // make external functions usable in template

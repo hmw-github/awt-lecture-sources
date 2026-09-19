@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LogoComponent } from '../shared/logo/logo.component';
 
 @Component({
-  selector: 'app-landing-page',
-  standalone: true,
-  imports: [LogoComponent],
-  templateUrl: './landing-page.component.html',
+    selector: 'app-landing-page',
+    imports: [LogoComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    templateUrl: './landing-page.component.html'
 })
 export class LandingPageComponent implements OnInit {
 

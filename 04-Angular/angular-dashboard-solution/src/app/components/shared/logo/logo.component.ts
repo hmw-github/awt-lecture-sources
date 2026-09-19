@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-  selector: 'app-logo',
-  standalone: true,
-  imports: [],
-  templateUrl: './logo.component.html',
+    selector: 'app-logo',
+    imports: [],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    templateUrl: './logo.component.html'
 })
 export class LogoComponent {
 }

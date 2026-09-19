@@ -1,16 +1,16 @@
 import { NgStyle } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { Form, FormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
 
 @Component({
     selector: 'app-login',
-    standalone: true,
     imports: [
         FormsModule,
         NgStyle
     ],
     templateUrl: './login.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent {

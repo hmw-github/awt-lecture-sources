@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Location } from '@angular/common';
 import { Photo } from '../../models/Photo';
 import { FormsModule } from '@angular/forms';
@@ -8,6 +8,7 @@ import { DataService } from '../../services/dataService.service';
     selector: 'app-photo-list',
     standalone: false,
     templateUrl: './photoList.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./photoList.component.css']
 })
 export class PhotoListComponent implements OnInit  {

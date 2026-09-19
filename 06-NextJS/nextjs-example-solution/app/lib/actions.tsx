@@ -122,17 +122,16 @@ export async function updateInvoice(
 }
 
 export async function deleteInvoice(id: string) {
-  
+
   try {
     console.log('deleteInvoice: id = ' + id);
-    await removeInvoice(id);  
+    await removeInvoice(id);
   } catch (err) {
-    return {
-      message: "Error: Failed to delete invoice"
-    }
+    console.error('Error: Failed to delete invoice', err);
+    return;
   }
   revalidatePath('/dashboard/invoices');
-  
+
 }
 
 export async function authenticate(

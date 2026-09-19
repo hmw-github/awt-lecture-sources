@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Todo } from '../../model/Todo';
 
@@ -7,6 +7,7 @@ import { Todo } from '../../model/Todo';
   imports: [FormsModule],
   templateUrl: './add-todo.html',
   styleUrl: './add-todo.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true
 })
 export class AddTodo {

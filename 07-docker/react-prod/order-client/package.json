@@ -5,8 +5,8 @@
   "proxy": "http://localhost:8080",
   "dependencies": {
     "lucide-react": "^0.525.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
     "react-scripts": "5.0.1"
   },
   "scripts": {

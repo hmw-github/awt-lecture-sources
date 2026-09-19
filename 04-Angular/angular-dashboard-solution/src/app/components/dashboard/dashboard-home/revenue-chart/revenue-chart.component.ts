@@ -1,15 +1,15 @@
 import { NgStyle } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { generateYAxis } from '../../../../utils';
 import { BackendService } from '../../../../services/backend.service';
 import { Revenue } from '../../../../models/Revenue';
 import { SkeletonComponent } from "../../../shared/skeleton/skeleton.component";
 
 @Component({
-  selector: 'app-revenue-chart',
-  standalone: true,
-  imports: [NgStyle, SkeletonComponent],
-  templateUrl: './revenue-chart.component.html',
+    selector: 'app-revenue-chart',
+    imports: [NgStyle, SkeletonComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    templateUrl: './revenue-chart.component.html'
 })
 export class RevenueChartComponent {
   loading: boolean;

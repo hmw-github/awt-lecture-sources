@@ -1,13 +1,13 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { SubscriptionService } from '../../../services/subscription.service';
 import { NgClass } from '@angular/common';
 import { generatePagination } from '../../../utils';
 
 @Component({
-  selector: 'app-pagination',
-  standalone: true,
-  imports: [NgClass],
-  templateUrl: './pagination.component.html',
+    selector: 'app-pagination',
+    imports: [NgClass],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    templateUrl: './pagination.component.html'
 })
 export class PaginationComponent implements OnChanges {
   @Input() totalPages!: number;

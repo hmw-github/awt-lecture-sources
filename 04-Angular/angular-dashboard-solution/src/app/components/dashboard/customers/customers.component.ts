@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-  selector: 'app-customers',
-  standalone: true,
-  imports: [],
-  templateUrl: './customers.component.html',
-  styleUrl: './customers.component.css'
+    selector: 'app-customers',
+    imports: [],
+    templateUrl: './customers.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrl: './customers.component.css'
 })
 export class CustomersComponent {
 

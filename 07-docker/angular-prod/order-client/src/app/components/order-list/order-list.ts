@@ -1,4 +1,4 @@
-import { Component, Input, WritableSignal } from '@angular/core';
+import { Component, Input, WritableSignal, ChangeDetectionStrategy } from '@angular/core';
 import { Order } from '../../models/Order';
 import { Server } from '../../services/server';
 import { MatIcon } from '@angular/material/icon';
@@ -8,6 +8,7 @@ import { MatIcon } from '@angular/material/icon';
   imports: [MatIcon],
   standalone: true,
   templateUrl: './order-list.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './order-list.css'
 })
 export class OrderList {
