@@ -1,0 +1,16 @@
+{
+  "name": "observable-demos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "demo1": "node src/demo1.js",
+    "demo2": "node src/demo2.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "rxjs": "^7.5.7"
+  }
+}
