@@ -1,6 +1,6 @@
 label {
   margin-left: 20px;
-  width: 160px;
+  width: 60px;
   display: inline-block;
 }
 
@@ -13,7 +13,7 @@ output {
 input {
   margin-left: 20px;
   margin-bottom: 5px;
-  width: 85%;
+  width: 255px;
 }
 
 .input-container {
