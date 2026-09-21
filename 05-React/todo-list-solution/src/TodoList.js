@@ -22,6 +22,16 @@ function TodoList() {
     },
   ];
   
+  const [todos, setTodos] = useState(todosInit);
+
+  return (
+    <>
+      <h2>My Todos</h2>
+      <AddTodoForm todos={todos} setTodos={setTodos} />
+      <hr />
+      <TodoItems todos={todos} setTodos={setTodos} />
+    </>
+  );
 }
 
 export default TodoList;
