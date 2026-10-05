@@ -24,7 +24,7 @@ class Person {
   }
 
   toString() {
-    return `name = ${this.#name}, age = ${this.#age}`;
+    return `name = ${this.#name}, age = ${this.#age}`; // using a template literal
   }
 }
 
@@ -41,9 +41,6 @@ class Employee extends Person {
   }
 }
 
-const annaEmp = new Employee("Anna", 21, 4711);
-//console.log(annaEmp.toString());
-
 if (
   typeof process !== "undefined" &&
   process.versions != null &&
@@ -54,3 +51,7 @@ if (
 } else {
   console.log("Not running in Node.js (likely a browser)");
 }
+
+const annaEmp = new Employee("Anna", 21, 4711);
+console.log(annaEmp.toString());
+
