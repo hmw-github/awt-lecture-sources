@@ -23,9 +23,9 @@ type LatestInvoiceRaw = Omit<LatestInvoice, 'amount'> & {
 export class BackendService {
   private readonly backendUrl = environment.BACKEND_URL;
   //configure loading delays in ms
-  private readonly CARD_DATA_LOADING_DELAY = 6000;
-  private readonly LATEST_INVOICES_LOADING_DELAY = 7000;
-  private readonly REVENUES_LOADING_DELAY = 4000;
+  private readonly CARD_DATA_LOADING_DELAY = 2000;
+  private readonly LATEST_INVOICES_LOADING_DELAY = 1000;
+  private readonly REVENUES_LOADING_DELAY = 3000;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -90,7 +90,7 @@ export class BackendService {
    */
   fetchRevenue(): Observable<Revenue[]> {
     return new Observable<Revenue[]>(subscriber => {
-      this.httpClient.get<Revenue[]>(this.backendUrl + '/revenue')
+      this.httpClient.get<Revenue[]>(this.backendUrl + 'revenue')
       .subscribe(revenue => {
         setTimeout(() => {
           subscriber.next(revenue);
