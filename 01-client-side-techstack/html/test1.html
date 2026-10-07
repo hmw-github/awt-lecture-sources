@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML Tags Example</title>
+  <!-- explain tags/features using a comment -->
+  <style>
+    /* TODO */
+    ul.circle { 
+        list-style-type: circle; 
+    }
+    ul.square { 
+        list-style-type: square; 
+    }
+    ul.none   { 
+        list-style-type: none; 
+    }
+    div.box {
+      border: 1px solid #444;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    span.highlight {
+      background-color: yellow;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TODO: Show heading sizes -->
+  <h1>First Heading</h1>
+
+  <!-- TODO: show a paragraph with some highlighted text (use CSS class) -->
+  <p>
+    show a paragraph with some <span class="highlight">highlighted text</span> (use CSS class)
+  </p>
+
+  <h2>Lists</h2>
+  <!-- TODO: show 3 unordered lists each with a different list style type  -->
+  <ul class="circle">
+    <li style="color: red">Milk</li>
+    <li>Butter</li>
+    <li>Yoghurt</li>
+  </ul>
+  <ul class="square">
+    <li>Milk</li>
+    <li>Butter</li>
+    <li>Yoghurt</li>
+  </ul>
+  <ul class="none">
+    <li>Milk</li>
+    <li>Butter</li>
+    <li>Yoghurt</li>
+  </ul>
+
+  <ol>
+    <li>First ordered item</li>
+    <li>Second ordered item</li>
+  </ol>
+
+  <h2>Links</h2>
+  <!-- TODO: 
+    show a simple link, 
+    one which opens a new tab, 
+    one with image https://via.placeholder.com/100 
+    one with a button inside 
+    -->
+  <p>
+    <a href="https://www.thi.de">go to THI</a>
+  </p>
+  <p>
+    <a href="https://www.thi.de" target="_new">go to THI</a>
+  </p>
+  <p>
+    <a href="https://www.thi.de" target="_new">
+        <img src="https://placehold.co/600x400/png" alt="image not found" width="20%">
+    </a>
+  </p>
+  <p>
+    <a href="https://www.thi.de" target="_new">
+        <button>go to THI</button>
+    </a>
+  </p>
+
+  <!-- TODO: give a table example using table, thead, tbody, tfoot -->
+  <h2>Table Example</h2>
+  <table>
+    <tr>
+        <th>Name</th>
+        <th>Country</th>
+    </tr>
+    <tr>
+        <td>Paul</td><td>Germany<td>
+    </tr>
+    <tr>
+        <td>Sushmita</td>
+        <td>India<td>
+    </tr>
+  </table>
+
+  <!-- TODO: show a div with an inline-styled span inside -->
+  <h2>Div & Span</h2>
+
+  <div>
+    TODO: show a div with an <span style="border: 1px solid red">inline-styled span</span> inside
+  </div>
+
+  <br><hr><br>
+
+    <h2>Form with Fieldset</h2>
+    <!--
+        action: form is sent to process-information.php
+
+        method=post: query string is sent inside http body
+        method=get: query string sent appended to URL
+    -->
+    <form action="process-information.php" method="get">
+      <fieldset>
+        <legend>Personal Information</legend>
+    
+        <!-- TODO: Add a single-line text input with id and name "name".
+             Add a label "Name: " connected to it via the for attribute.
+             Surround with paragraph. -->
+        <p>
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name">
+        </p>    
+        <!-- TODO: Add a multi-line text area with id and name "bio".
+             Add a label "Bio: " connected to it via the for attribute.
+        -->
+        <label for="bio">Bio:</label>
+        <textarea id="bio">I come from Germany and live abroad...</textarea>
+    
+        <!-- TODO: Add a dropdown list with id and name "color" and the options
+             "Red", "Green" and "Blue". Add a label "Favorite Color: " connected
+             to it via the for attribute. -->
+    
+        <!-- TODO: Add a checkbox with name "subscribe" and the text
+             "Subscribe to newsletter". Wrap the checkbox and its text in a label
+             (implicit labelling, no for attribute) so clicking the text toggles it. -->
+    
+        <!-- TODO: Add a group of two radio buttons that share the name "radiogroup"
+             so only one can be selected. The first has value "yes" and text "Yes",
+             the second has value "no" and text "No". Wrap each one in its own label. -->
+    
+        <!-- TODO: Add three buttons:
+             1. An input of type "button" with the text "Just a button".
+                It does nothing on its own and does not submit the form.
+             2. An input of type "submit" with the text "Submit with input".
+             3. A button element of type "submit" with the text "Submit with button".
+             Both submit buttons send the form via POST to /submit. -->
+        <input type="submit" value="submit">
+      </fieldset>
+    </form>
+
+</body>
+</html>
