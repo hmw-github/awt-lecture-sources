@@ -128,30 +128,55 @@
         <!-- TODO: Add a multi-line text area with id and name "bio".
              Add a label "Bio: " connected to it via the for attribute.
         -->
-        <label for="bio">Bio:</label>
-        <textarea id="bio">I come from Germany and live abroad...</textarea>
-    
+        <p>
+          <label for="bio">Bio:</label>
+          <textarea id="bio">I come from Germany and live abroad...</textarea>
+        </p>    
         <!-- TODO: Add a dropdown list with id and name "color" and the options
              "Red", "Green" and "Blue". Add a label "Favorite Color: " connected
              to it via the for attribute. -->
-    
+        <p>
+          <label for="color">Favourite color:</label>
+          <select id="color" name="color">
+            <option>Red</option>
+            <option>Green</option>
+            <option>Blue</option>
+          </select>
+        </p>
+
         <!-- TODO: Add a checkbox with name "subscribe" and the text
              "Subscribe to newsletter". Wrap the checkbox and its text in a label
              (implicit labelling, no for attribute) so clicking the text toggles it. -->
-    
+        <p>
+          <label>
+            <input type="checkbox" name="subscribe"> Subscribe to newsletter
+          </label>
+        </p>
         <!-- TODO: Add a group of two radio buttons that share the name "radiogroup"
              so only one can be selected. The first has value "yes" and text "Yes",
              the second has value "no" and text "No". Wrap each one in its own label. -->
-    
+        <p>
+          <label><input type="radio" name="radiogroup" value="yes"> Yes</label>
+          <label><input type="radio" name="radiogroup" value="no"> No</label>          
+        </p>
         <!-- TODO: Add three buttons:
              1. An input of type "button" with the text "Just a button".
                 It does nothing on its own and does not submit the form.
              2. An input of type "submit" with the text "Submit with input".
              3. A button element of type "submit" with the text "Submit with button".
              Both submit buttons send the form via POST to /submit. -->
-        <input type="submit" value="submit">
+        <input type="button" id="button1" value="Just a button">
+        <input type="submit" value="submit with input">
+        <button type="submit">Submit with button</button>
       </fieldset>
     </form>
+
+    <script>
+      document.getElementById("button1")
+      .addEventListener("click", function(event) {
+        alert("Hi!");
+      })
+    </script>
 
 </body>
 </html>
