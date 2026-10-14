@@ -1,5 +1,5 @@
-function getMessage(name: string) {
-  const message = `Hello ${name}!`;
+function getMessage(name: string): string {
+  const message: string = `Hello ${name}!`;
   return message;
 }
 
