@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <h4>Shopping List</p>
+    <h4>Shopping List</h4>
 
         <ol id='list'></ol>
 
@@ -27,36 +27,31 @@
     let articles = ['Milk', 'Butter', 'Fruit', 'Salad'];
 
     /**
-     * Create new article entry for the list
+     * TODO: Append a new entry to the shopping list (<ol id="list">).
+     *
+     * - create a new <li> element
+     * - set its text to a random article (use randomArticle(articles))
+     * - append the <li> element to the list
+     *
+     * Hints: document.getElementById(), document.createElement(),
+     *        element.textContent, element.appendChild()
      */
     function appendEntry() {
-        const list = document.getElementById('list');
-        // create LI element
-        const entry = document.createElement('li');
-        // create text node for LI element
-        const text = document.createElement('text');
-
-        // populate text node with random article from the list
-        text.textContent = randomArticle(articles);
-        // append text node to LI element
-        entry.appendChild(text);
-        // append LI element to the list element
-        list.appendChild(entry);
+        // your code here
     }
 
+    /**
+     * TODO: Remove the entry whose number the user entered in <input id="nr">.
+     *
+     * - read the number from the input field
+     * - note: the user enters 1..n, but the list's child nodes are indexed 0..n-1
+     * - remove the corresponding <li> element from the list
+     * - if there is no such entry, show alert('Entry not found!')
+     *
+     * Hints: input.value, list.childNodes, list.removeChild(), try/catch
+     */
     function deleteEntry() {
-        // read index the user input
-        const nr = document.getElementById('nr').value;
-        const list = document.getElementById('list');
-        try {
-            // user entered number 1..n, we need 0..n-1
-            const entry = list.childNodes[nr - 1];
-            // remove child
-            list.removeChild(entry);
-        }
-        catch (err) {
-            alert('Entry not found!');
-        }
+        // your code here
     }
 
     /**
