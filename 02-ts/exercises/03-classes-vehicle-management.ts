@@ -21,7 +21,7 @@ interface Vehicle {
  * For now, these methods can just print messages like "Engine started" and "Engine stopped."
  */
 
-// TODO
+// TODO: abstract class BaseVehicle implements Vehicle { ... }
 
 /**
  * Step 3: Create Concrete Classes
@@ -30,9 +30,18 @@ interface Vehicle {
  * - Implement the getFuelType()  method.
  * - Implement the drive(distance: number) method to simulate driving a certain 
  *   distance (e.g., print the message "Driving {distance} km").
+ *
+ * Details:
+ * - Car: the constructor takes make, model and fuelType (string) and passes
+ *   make and model to the BaseVehicle constructor (super). getFuelType()
+ *   returns the stored fuelType.
+ * - Motorcycle: the constructor takes only make and model. getFuelType()
+ *   always returns "electric".
  */
 
-// TODO
+// TODO: class Car extends BaseVehicle { ... }
+
+// TODO: class Motorcycle extends BaseVehicle { ... }
 
 /**
  * Step 4: Usage:
@@ -41,6 +50,22 @@ interface Vehicle {
  * Drive each vehicle a certain distance.
  * Stop their engines.
  * Print the fuel type for each vehicle.
+ *
+ * Concretely:
+ * 1. Create a Car "car" with make 'Audi', model 'A1' and fuel type 'petrol'.
+ *    Start its engine, drive 100 km, stop its engine and print its fuel type.
+ * 2. Create a Motorcycle "motorbike" with make 'Honda' and model 'CoolBike1'.
+ *    Start its engine, drive 50 km, stop its engine and print its fuel type.
+ *
+ * Expected output:
+ *   Engine started.
+ *   Driving 100 km.
+ *   Engine stopped.
+ *   petrol
+ *   Engine started.
+ *   Driving 50 km.
+ *   Engine stopped.
+ *   electric
  */
 
 // TODO

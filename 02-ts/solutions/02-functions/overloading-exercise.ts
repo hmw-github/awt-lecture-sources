@@ -25,7 +25,7 @@ function toArray(item: string | number | string[] | number[]): string[] | number
 }
 
 /* usage */
-console.log(toArray('string'));
-console.log(toArray(42));
-console.log(toArray(['a', 'b']));
-console.log(toArray([1, 2, 3]));
+console.log(toArray('string'));   // [ 'string' ]
+console.log(toArray(42));         // [ 42 ]
+console.log(toArray(['a', 'b'])); // [ 'a', 'b' ]
+console.log(toArray([1, 2, 3]));  // [ 1, 2, 3 ]

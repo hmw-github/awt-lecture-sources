@@ -26,10 +26,10 @@ function applyDiscount2(price: number, discount: number=0.05): number {
 }
 
 // testing
-console.log(applyDiscount(100.0));
-console.log(applyDiscount(100.0, 0.2));
-console.log(applyDiscount2(100.0));
-console.log(applyDiscount2(100.0, 0.2));
+console.log(applyDiscount(100.0));       // 95
+console.log(applyDiscount(100.0, 0.2));  // 80
+console.log(applyDiscount2(100.0));      // 95
+console.log(applyDiscount2(100.0, 0.2)); // 80
 
 // Task 2
 function createMap<T>(...params: T[]): Map<number, T> {
@@ -43,7 +43,7 @@ function createMap<T>(...params: T[]): Map<number, T> {
 const numbers = createMap<number>(1, 2, 3); // { 0: 1, 1: 2, 2: 3 }
 console.log(numbers);
 const strings = createMap('Hello', 'World', '!'); // TS infers T from the parameters
-console.log(strings);
+console.log(strings); // Map { 0 => 'Hello', 1 => 'World', 2 => '!' }
 
 // Task 3
 function calculate(x: number, y: number, operation: (x: number, y: number) => number): number {
@@ -52,5 +52,5 @@ function calculate(x: number, y: number, operation: (x: number, y: number) => nu
 
 
 // testing
-console.log(calculate(1, 4, (x, y) => x + y));
-console.log(calculate(1, 4, (x, y) => x * y));
+console.log(calculate(1, 4, (x, y) => x + y)); // 5
+console.log(calculate(1, 4, (x, y) => x * y)); // 4

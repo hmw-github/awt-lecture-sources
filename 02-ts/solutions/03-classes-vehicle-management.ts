@@ -67,7 +67,7 @@ class Car extends BaseVehicle {
   }
 
 }
-class MotorCycle extends BaseVehicle {
+class Motorcycle extends BaseVehicle {
   constructor(make: string, model: string) {
     super(make, model);
   }
@@ -91,12 +91,13 @@ class MotorCycle extends BaseVehicle {
  */
 
 let car: Car = new Car('Audi', 'A1', 'petrol');
-car.startEngine();
-car.drive(100);
-car.stopEngine();
-console.log(car.getFuelType());
-let motorbike: MotorCycle = new MotorCycle('Honda', 'CoolBike1');
-car.startEngine();
-car.drive(100);
-car.stopEngine();
-console.log(car.getFuelType());
+car.startEngine();                // Engine started.
+car.drive(100);                   // Driving 100 km.
+car.stopEngine();                 // Engine stopped.
+console.log(car.getFuelType());   // petrol
+
+let motorbike: Motorcycle = new Motorcycle('Honda', 'CoolBike1');
+motorbike.startEngine();                // Engine started.
+motorbike.drive(50);                    // Driving 50 km.
+motorbike.stopEngine();                 // Engine stopped.
+console.log(motorbike.getFuelType());   // electric
