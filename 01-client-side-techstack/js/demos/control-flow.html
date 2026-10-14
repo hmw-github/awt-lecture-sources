@@ -16,7 +16,7 @@
   document.writeln("<br>Object keys with for-in loop:");
   const obj = { name: "Paula", age: 23 };
   for (let key in obj)
-    document.writeln(" " + key);
+    document.writeln(" " + key + ', ' + obj[key]);
 
   /* iterate over array elements with for-of */
   document.writeln("<br>Array enumeration with for-of loop:");
@@ -25,7 +25,7 @@
     document.writeln(" " + n);
 
   numbers.forEach((value, index) => {
-    console.log(`${value}:  ${index}`);
+    console.log(`Value: ${value}:  ${index}`);
   });
 
 </script>

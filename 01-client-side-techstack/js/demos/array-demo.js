@@ -22,6 +22,11 @@
     { name: 'Anna', age: 14 },
     { name: 'Peter', age: 54 }
   ];
+
+  // sort persons by name
+  persons.sort((p1, p2) => p2.name.localeCompare(p1.name));
+  persons.forEach(p => console.log(p.name));
+
   // output all adults
   persons
   .filter(person => person.age >= 18)

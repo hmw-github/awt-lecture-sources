@@ -37,7 +37,11 @@
      *        element.textContent, element.appendChild()
      */
     function appendEntry() {
-        // your code here
+        const ol = document.getElementById('list');
+        const newLI = document.createElement('li');
+        const article = randomArticle(articles);
+        newLI.innerHTML = article;
+        ol.appendChild(newLI);
     }
 
     /**
@@ -51,7 +55,7 @@
      * Hints: input.value, list.childNodes, list.removeChild(), try/catch
      */
     function deleteEntry() {
-        // your code here
+        
     }
 
     /**
@@ -63,10 +67,12 @@
     }
 
     // establish event listeners new and delete buttons
-    document.getElementById('new-button').addEventListener('click', function (event) {
+    document.getElementById('new-button')
+    .addEventListener('click', function (event) {
         appendEntry();
     });
-    document.getElementById('delete-button').addEventListener('click', function (event) {
+    document.getElementById('delete-button')
+    .addEventListener('click', function (event) {
         deleteEntry();
     });
 </script>
