@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My todos</title>
+    <style>
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>My Todo List</h1>
+    <label for="new-todo">new todo:</label>
+    <input id="new-todo" type="text" placeholder="describe todo...">
+    <button id="add-button">add</button>
+    <hr>
+    <h3>Current Todos</h3>
+    <ul id="todo-list">
+    </ul>
+    <output id="message" class="hidden">No todos - enjoy your day!</output>
+  </body>
+  <script>
+    var todos = [
+      {
+        description: "go shopping",
+        done: false
+      },
+      {
+        description: "clean room",
+        done: false
+      }
+    ];
+
+    /**
+     * TODO: Render all open todos (done == false) into <ul id="todo-list">.
+     *
+     * - clear the list first (it is re-rendered on every change)
+     * - determine the open todos
+     * - if there are no open todos, show <output id="message"> and stop
+     * - otherwise hide the message
+     * - for each open todo:
+     *   - create an <li> element containing the todo's description
+     *   - create a <button> with the label 'done'
+     *   - when the button is clicked, mark the todo as done and re-render the list
+     *   - append the button to the <li> and the <li> to the list
+     *
+     * Hints: element.innerHTML, array.filter(), array.forEach(),
+     *        element.classList.add() / .remove(), document.createElement(),
+     *        button.onclick, element.appendChild()
+     */
+    function displayTodos() {
+      // your code here
+    }
+
+    /**
+     * TODO: Add a new todo when the user clicks the 'add' button.
+     *
+     * - register a click listener on <button id="add-button">
+     * - read the description from <input id="new-todo">
+     * - ignore empty input (or input consisting only of blanks)
+     * - otherwise push a new todo object { description, done: false } to todos
+     * - re-render the list and clear the input field
+     *
+     * Hints: element.addEventListener(), input.value, string.trim(), array.push()
+     */
+    // your code here
+
+    displayTodos();
+  </script>
+</html>
