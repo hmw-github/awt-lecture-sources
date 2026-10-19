@@ -1,0 +1,13 @@
+{
+  "name": "shopping-list-server",
+  "version": "1.0.0",
+  "description": "Minimal Express REST server for the shopping list exercise",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

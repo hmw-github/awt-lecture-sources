@@ -90,7 +90,7 @@
                 return JSON.parse(jsonText);
             })
             .then((person) => {
-                // chack age
+                // check age
                 if (person.age > 40) {
                     // too old - throw exception
                     throw new Error("This person is too old, age = " + person.age);

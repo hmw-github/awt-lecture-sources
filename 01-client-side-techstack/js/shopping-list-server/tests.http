@@ -1,0 +1,16 @@
+@baseUrl = http://localhost:3000
+
+### Get the current shopping list
+GET {{baseUrl}}/shopping-list
+
+### Replace the shopping list with a new one
+POST {{baseUrl}}/shopping-list
+Content-Type: application/json
+
+["Eggs", "Bread", "Cheese"]
+
+### Invalid body -> 400 Bad Request
+POST {{baseUrl}}/shopping-list
+Content-Type: application/json
+
+{ "item": "Eggs" }
