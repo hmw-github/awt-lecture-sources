@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        #nr {
+            width: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <h4>Shopping List</h4>
+
+        <ol id='list'>
+        </ol>
+
+        <p>
+            <button id="new-button">New Entry</button>
+        </p>
+        Nr: <input type='number' id='nr'>
+        <button id="delete-button">remove entry</button>
+</body>
+<script>
+    var shoppingList = [];
+    let articles = ['Milk', 'Butter', 'Fruit', 'Salad'];
+
+    /**
+     * TODO: Append a new entry to the shopping list (<ol id="list">).
+     *
+     * - create a new <li> element
+     * - set its text to a random article (use randomArticle(articles))
+     * - append the <li> element to the list
+     *
+     * Hints: document.getElementById(), document.createElement(),
+     *        element.textContent, element.appendChild()
+     */
+    function appendEntry() {
+        const ol = document.getElementById('list');
+        const newLI = document.createElement('li');
+        const newArticle = randomArticle(articles);
+
+        newLI.innerText = newArticle;
+        ol.appendChild(newLI);
+        shoppingList.push(newArticle);
+        storeList();
+    }
+
+    /**
+     * POST call with fetch:
+     * 
+        fetch("https://example.org/post", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+        .then(function(response) {
+            // check response.ok
+            // use response.json() if necessary
+        })
+        .then(function(data) {
+            ...
+        })
+        .catch(function(err) {
+            ...
+        });
+     * 
+     */
+
+    function storeList() {
+        var xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4) {
+                if (xmlhttp.status != 201) {
+                    console.error("Error: " + xmlhttp.status);
+                    alert(xmlhttp.status);
+                } else {
+                    alert('Data saved!');
+                }
+            }
+        };
+        xmlhttp.open("POST", "http://localhost:3000/shopping-list", true);
+        xmlhttp.setRequestHeader("content-type", "application/json");
+        xmlhttp.send(JSON.stringify(shoppingList));
+    }
+
+    /**
+     * TODO: Remove the entry whose number the user entered in <input id="nr">.
+     *
+     * - read the number from the input field
+     * - note: the user enters 1..n, but the list's child nodes are indexed 0..n-1
+     * - remove the corresponding <li> element from the list
+     * - if there is no such entry, show alert('Entry not found!')
+     *
+     * Hints: input.value, list.childNodes, list.removeChild(), try/catch
+     */
+    function deleteEntry() {
+        const ol = document.getElementById('list');
+        const nrField = document.getElementById('nr');
+        const nr = nrField.value;
+
+        try {
+            const elementToDelete = ol.childNodes[nr-1];
+            ol.removeChild(elementToDelete);
+            nrField.value = '';
+            // delete entry from shoppingList
+            shoppingList.splice(nr-1, 1);
+            storeList();            
+        } catch (err) {
+            alert('Entry not found!');
+        }
+    }
+
+    /**
+     * Returns a random article from 'articles' (here named 'list')
+    */
+    function randomArticle(list) {
+        const nr = Math.trunc((Math.random() * list.length)) % list.length;
+        return list[nr];
+    }
+
+    // establish event listeners new and delete buttons
+    document.getElementById('new-button')
+    .addEventListener('click', function (event) {
+        appendEntry();
+    });
+    document.getElementById('delete-button')
+    .addEventListener('click', function (event) {
+        deleteEntry();
+    });
+
+    // load the shopping list and populate the OL
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4) {
+            if (xmlhttp.status == 200) {
+                console.log(xmlhttp.responseText);
+                shoppingList = JSON.parse(xmlhttp.responseText);      
+                const OL = document.getElementById('list');
+                
+                shoppingList.forEach((article) => {
+                    const newLI = document.createElement('li');
+                    newLI.innerText = article;
+                    OL.appendChild(newLI);
+                });
+            } else {
+                console.error("Error (" + xmlhttp.status + "): "
+                    + xmlhttp.responseText);
+                alert(xmlhttp.status);
+            }
+        }
+    };
+    xmlhttp.open("GET", "http://localhost:3000/shopping-list", true);
+    xmlhttp.send();
+
+</script>
+
+</html>

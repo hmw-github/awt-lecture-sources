@@ -38,8 +38,8 @@ abstract class BaseVehicle implements Vehicle {
     console.log('Engine stopped.');
   }
 
-  abstract drive(distance: number): void
-  abstract getFuelType(): string;
+  public abstract drive(distance: number): void
+  public abstract getFuelType(): string;
 }
 
 /**
