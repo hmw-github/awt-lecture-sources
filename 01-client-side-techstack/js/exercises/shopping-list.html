@@ -15,7 +15,8 @@
 <body>
     <h4>Shopping List</h4>
 
-        <ol id='list'></ol>
+        <ol id='list'>
+        </ol>
 
         <p>
             <button id="new-button">New Entry</button>
@@ -24,6 +25,7 @@
         <button id="delete-button">remove entry</button>
 </body>
 <script>
+    var shoppingList = [];
     let articles = ['Milk', 'Butter', 'Fruit', 'Salad'];
 
     /**
@@ -37,7 +39,32 @@
      *        element.textContent, element.appendChild()
      */
     function appendEntry() {
-        
+        const ol = document.getElementById('list');
+        const newLI = document.createElement('li');
+        const newArticle = randomArticle(articles);
+
+        newLI.innerText = newArticle;
+        ol.appendChild(newLI);
+        shoppingList.push(newArticle);
+        storeList();
+    }
+
+    function storeList() {
+        var xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4) {
+                if (xmlhttp.status != 201) {
+                    console.error("Error: " + xmlhttp.status);
+                    alert(xmlhttp.status);
+                } else {
+                    alert('Data saved!');
+                }
+            }
+        };
+        xmlhttp.open("POST", "http://localhost:3000/shopping-list", true);
+        xmlhttp.setRequestHeader("content-type", "application/json");
+        xmlhttp.send(JSON.stringify(shoppingList));
     }
 
     /**
@@ -51,11 +78,24 @@
      * Hints: input.value, list.childNodes, list.removeChild(), try/catch
      */
     function deleteEntry() {
-        
+        const ol = document.getElementById('list');
+        const nrField = document.getElementById('nr');
+        const nr = nrField.value;
+
+        try {
+            const elementToDelete = ol.childNodes[nr-1];
+            ol.removeChild(elementToDelete);
+            nrField.value = '';
+            // delete entry from shoppingList
+            shoppingList.splice(nr-1, 1);
+            storeList();            
+        } catch (err) {
+            alert('Entry not found!');
+        }
     }
 
     /**
-     * 
+     * Returns a random article from 'articles' (here named 'list')
     */
     function randomArticle(list) {
         const nr = Math.trunc((Math.random() * list.length)) % list.length;
@@ -71,6 +111,31 @@
     .addEventListener('click', function (event) {
         deleteEntry();
     });
+
+    // load the shopping list and populate the OL
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4) {
+            if (xmlhttp.status == 200) {
+                console.log(xmlhttp.responseText);
+                shoppingList = JSON.parse(xmlhttp.responseText);      
+                const OL = document.getElementById('list');
+                
+                shoppingList.forEach((article) => {
+                    const newLI = document.createElement('li');
+                    newLI.innerText = article;
+                    OL.appendChild(newLI);
+                });
+            } else {
+                console.error("Error (" + xmlhttp.status + "): "
+                    + xmlhttp.responseText);
+                alert(xmlhttp.status);
+            }
+        }
+    };
+    xmlhttp.open("GET", "http://localhost:3000/shopping-list", true);
+    xmlhttp.send();
+
 </script>
 
 </html>
