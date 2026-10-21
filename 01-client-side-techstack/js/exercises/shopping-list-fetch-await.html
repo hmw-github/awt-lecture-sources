@@ -49,35 +49,25 @@
         storeList();
     }
 
-    /**
-     * POST call with fetch:
-     * 
-        const response = await fetch("https://example.org/post", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        });
-     * 
-     */
+    async function storeList() {
+        try {
+            const response = await fetch("http://localhost:3000/shopping-list", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(shoppingList),
+            });
 
-     function storeList() {
-        var xmlhttp = new XMLHttpRequest();
-
-        xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState == 4) {
-                if (xmlhttp.status != 201) {
-                    console.error("Error: " + xmlhttp.status);
-                    alert(xmlhttp.status);
-                } else {
-                    alert('Data saved!');
-                }
+            if (!response.ok) {
+                console.error("Error: " + response.status);
+                alert(response.status);
+            } else {
+                alert('Data saved!');
             }
-        };
-        xmlhttp.open("POST", "http://localhost:3000/shopping-list", true);
-        xmlhttp.setRequestHeader("content-type", "application/json");
-        xmlhttp.send(JSON.stringify(shoppingList));
+        } catch (err) {
+            alert(err);
+        }
     }
 
     /**
@@ -125,30 +115,29 @@
         deleteEntry();
     });
 
-    // load the shopping list and populate the OL
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
-        if (xmlhttp.readyState == 4) {
-            if (xmlhttp.status == 200) {
-                console.log(xmlhttp.responseText);
-                shoppingList = JSON.parse(xmlhttp.responseText);      
-                const OL = document.getElementById('list');
-                
-                shoppingList.forEach((article) => {
-                    const newLI = document.createElement('li');
-                    newLI.innerText = article;
-                    OL.appendChild(newLI);
-                });
-            } else {
-                console.error("Error (" + xmlhttp.status + "): "
-                    + xmlhttp.responseText);
-                alert(xmlhttp.status);
+    const f = async () => {
+        // load the shopping list and populate the OL
+        try {
+            const response = await fetch("http://localhost:3000/shopping-list");
+
+            if (!response.ok) {
+                throw new Error('Server not ready!');                            
             }
+
+            shoppingList = await response.json();
+
+            const OL = document.getElementById('list');        
+            shoppingList.forEach((article) => {
+                const newLI = document.createElement('li');
+                newLI.innerText = article;
+                OL.appendChild(newLI);
+            });
+
+        } catch (err) {
+            alert('Error: ' + err.message);
         }
     };
-    xmlhttp.open("GET", "http://localhost:3000/shopping-list", true);
-    xmlhttp.send();
-
+    f();
 </script>
 
 </html>
