@@ -157,9 +157,8 @@ function returnBook(member: Member, book: Book): void {
  * 7. Joe borrows book1 (now available again).
  * 8. Print Joe's borrowed book titles and the loan1 object.
  *
- * run your code with: node 04-interfaces-library-system.ts
- * (node v24 can directly run ts files)
- * 
+ * run your code with: ts-node 04-interfaces-library-system.ts
+ *  
  * Expected output (titles depend on your example books):
  *   Anna borrowed "Clean Code".
  *   "Clean Code" is already borrowed.
