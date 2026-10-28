@@ -60,38 +60,38 @@ interface Loan {
  */
 
 // TODO
-const b1: Book = {
+const book1: Book = {
   title: "Clean Code",
   author: "Robert C. Martin",
   isbn: "978-0132350884",
   isAvailable: true,
 };
-const b2: Book = {
+const book2: Book = {
   title: "The Pragmatic Programmer",
   author: "Andrew Hunt, David Thomas",
   isbn: "978-0135957059",
   isAvailable: true,
 };
-const b3: Book = {
+const book3: Book = {
   title: "Effective TypeScript",
   author: "Dan Vanderkam",
   isbn: "978-1098155063",
   isAvailable: true,
 };
-const m1: Member = {
+const member1: Member = {
   id: 1,
   name: "Anna",
   email: "anna@example.com",
   borrowedBooks: [],
 };
-const m2: Member = {
+const member2: Member = {
   id: 2,
   name: "Joe",
   email: "joe@example.com",
   borrowedBooks: [],
 };
 
-const l1: Loan = {
+const loan1: Loan = {
   book: book1,
   member: member1,
   loanDate: new Date(),
@@ -108,7 +108,7 @@ const l1: Loan = {
  */
 
 // TODO
-function borrowBook2(book: Book, member: Member): void {
+function borrowBook(member: Member, book: Book): void {
   if (book.isAvailable) {
     member.borrowedBooks.push(book);
     book.isAvailable = false;
@@ -128,7 +128,7 @@ function borrowBook2(book: Book, member: Member): void {
  */
 
 // TODO
-function returnBook2(member: Member, book: Book): void {
+function returnBook(member: Member, book: Book): void {
   const bookPosition = member.borrowedBooks.indexOf(book);
 
   if (bookPosition == -1) {
@@ -157,6 +157,9 @@ function returnBook2(member: Member, book: Book): void {
  * 7. Joe borrows book1 (now available again).
  * 8. Print Joe's borrowed book titles and the loan1 object.
  *
+ * run your code with: node 04-interfaces-library-system.ts
+ * (node v24 can directly run ts files)
+ * 
  * Expected output (titles depend on your example books):
  *   Anna borrowed "Clean Code".
  *   "Clean Code" is already borrowed.
@@ -172,20 +175,19 @@ function returnBook2(member: Member, book: Book): void {
  */
 
 // TODO
-borrowBook(l1.member, l1.book); // Anna borrowed "Clean Code".
-borrowBook(m2, b1); // "Clean Code" is already borrowed.
-borrowBook(m2, b2); // Joe borrowed "The Pragmatic Programmer".
-borrowBook(m2, b3); // Joe borrowed "Effective TypeScript".
+borrowBook(loan1.member, loan1.book); // Anna borrowed "Clean Code".
+borrowBook(member2, book1); // "Clean Code" is already borrowed.
+borrowBook(member2, book2); // Joe borrowed "The Pragmatic Programmer".
+borrowBook(member2, book3); // Joe borrowed "Effective TypeScript".
 
 // map turn book array into string array: 
-// [ b1, b2 ] =>(map) [ title1, title2 ] 
-console.log(m1.name, m1.borrowedBooks.map((b) => b.title));
-console.log(m2.name, m2.borrowedBooks.map((b) => b.title));
+// [ book1, b2 ] =>(map) [ title1, title2 ] 
+console.log(member1.name, member1.borrowedBooks.map((b) => b.title));
+console.log(member2.name, member2.borrowedBooks.map((b) => b.title));
 
-returnBook(l1.member, l1.book); // Anna returned "Clean Code".
-l1.returnDate = new Date();
-returnBook(m1, b2); // Anna has not borrowed "The Pragmatic Programmer".
+returnBook(loan1.member,loan1.book); // Anna returned "Clean Code".loan1.returnDate = new Date();
+returnBook(member1, book2); // Anna has not borrowed "The Pragmatic Programmer".
 
-borrowBook(m2, b1); // Joe borrowed "Clean Code".
-console.log(m2.name, m2.borrowedBooks.map((b) => b.title));
-console.log(l1);
+borrowBook(member2, book1); // Joe borrowed "Clean Code".
+console.log(member2.name, member2.borrowedBooks.map((b) => b.title));
+console.log(loan1);
