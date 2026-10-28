@@ -15,6 +15,10 @@
  */
 interface Book {
   // TODO
+  title: string,
+  author: string,
+  isbn: string,
+  isAvailable: boolean
 }
 
 /**
@@ -26,6 +30,10 @@ interface Book {
  */
 interface Member {
   // TODO
+  id: number,
+  name: string,
+  email: string,
+  borrowedBooks: Array<Book>;
 }
 
 /**
@@ -38,6 +46,10 @@ interface Member {
  */
 interface Loan {
   // TODO
+  book: Book;
+  member: Member;
+  loanDate: Date;
+  returnDate: Date | null;
 }
 
 /**
@@ -48,16 +60,63 @@ interface Loan {
  */
 
 // TODO
+const b1: Book = {
+  title: "Clean Code",
+  author: "Robert C. Martin",
+  isbn: "978-0132350884",
+  isAvailable: true,
+};
+const b2: Book = {
+  title: "The Pragmatic Programmer",
+  author: "Andrew Hunt, David Thomas",
+  isbn: "978-0135957059",
+  isAvailable: true,
+};
+const b3: Book = {
+  title: "Effective TypeScript",
+  author: "Dan Vanderkam",
+  isbn: "978-1098155063",
+  isAvailable: true,
+};
+const m1: Member = {
+  id: 1,
+  name: "Anna",
+  email: "anna@example.com",
+  borrowedBooks: [],
+};
+const m2: Member = {
+  id: 2,
+  name: "Joe",
+  email: "joe@example.com",
+  borrowedBooks: [],
+};
+
+const l1: Loan = {
+  book: book1,
+  member: member1,
+  loanDate: new Date(),
+  returnDate: null,
+};
+
 
 /**
  * 2. Write a function borrowBook that takes a Member and a Book as parameters and:
  *    - Checks if the book is available.
  *    - If it is, adds the book to the member's borrowedBooks array and marks
  *      the book as unavailable.
- *    - If it is not, logs that the book is already borrowed.
+ *    - If it is not, logs borrowed.
  */
 
 // TODO
+function borrowBook2(book: Book, member: Member): void {
+  if (book.isAvailable) {
+    member.borrowedBooks.push(book);
+    book.isAvailable = false;
+    console.log(`${member.name} borrowed ${book.title}`);
+  } else {
+    console.log(`borrowBook: book ${book.isbn} not available!`);
+  }
+}
 
 /**
  * 3. Write a function returnBook that takes a Member and a Book and:
@@ -69,6 +128,18 @@ interface Loan {
  */
 
 // TODO
+function returnBook2(member: Member, book: Book): void {
+  const bookPosition = member.borrowedBooks.indexOf(book);
+
+  if (bookPosition == -1) {
+    // not found
+    console.log(`returnBook: ${book.title} not borrowed by ${member.name}!`);
+  } else {
+    member.borrowedBooks.splice(bookPosition, 1);
+    book.isAvailable = true;
+    console.log(`${member.name} returned ${book.title}`);
+  }
+}
 
 /**
  * Usage:
@@ -101,3 +172,20 @@ interface Loan {
  */
 
 // TODO
+borrowBook(l1.member, l1.book); // Anna borrowed "Clean Code".
+borrowBook(m2, b1); // "Clean Code" is already borrowed.
+borrowBook(m2, b2); // Joe borrowed "The Pragmatic Programmer".
+borrowBook(m2, b3); // Joe borrowed "Effective TypeScript".
+
+// map turn book array into string array: 
+// [ b1, b2 ] =>(map) [ title1, title2 ] 
+console.log(m1.name, m1.borrowedBooks.map((b) => b.title));
+console.log(m2.name, m2.borrowedBooks.map((b) => b.title));
+
+returnBook(l1.member, l1.book); // Anna returned "Clean Code".
+l1.returnDate = new Date();
+returnBook(m1, b2); // Anna has not borrowed "The Pragmatic Programmer".
+
+borrowBook(m2, b1); // Joe borrowed "Clean Code".
+console.log(m2.name, m2.borrowedBooks.map((b) => b.title));
+console.log(l1);

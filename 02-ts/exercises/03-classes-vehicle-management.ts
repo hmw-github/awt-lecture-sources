@@ -7,6 +7,9 @@
  */
 interface Vehicle {
   // TODO
+  startEngine(): void,
+  stopEngine(): void,
+  drive(distance: number): void
 }
 
 /**
@@ -22,6 +25,17 @@ interface Vehicle {
  */
 
 // TODO: abstract class BaseVehicle implements Vehicle { ... }
+abstract class BaseVehicle implements Vehicle {
+  protected make: string;
+  protected model: string;
+
+  constructor(make: string, model: string) {
+    this.make = make;
+    this.model = model;
+  }
+
+  public abstract getFuelType(): string;
+}
 
 /**
  * Step 3: Create Concrete Classes
