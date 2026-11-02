@@ -24,8 +24,15 @@ function formatDate(date: Date): string {
  * Decorator "logExecutionTime": example output
  *    calculateSquare: 268.502ms
  */
-
-// TODO
+function logExecutionTime(originalMethod: any, _context: any) {
+  function replacementMethod(this: any, ...args: any[]) {
+    console.time(originalMethod.name); // Start timing
+    const result = originalMethod.call(this, ...args);
+    console.timeEnd(originalMethod.name); // End timing
+    return result;
+  }
+  return replacementMethod;
+}
 
 class MathOperations {
   // TODO: use decorators
