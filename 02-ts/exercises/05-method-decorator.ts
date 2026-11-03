@@ -19,6 +19,17 @@ function formatDate(date: Date): string {
  */
 
 // TODO
+function logger(originalMethod: any, _context: any) {
+  function replacementMethod(this: any, ...args: any[]) {
+    
+    console.log(`${formatDate(new Date())}: method "${originalMethod.name}" called ...`);
+    const result = originalMethod.call(this, ...args);
+    console.log(`${formatDate(new Date())}: method "${originalMethod.name}" finished.`);
+    
+    return result;
+  }
+  return replacementMethod;
+}
 
 /**
  * Decorator "logExecutionTime": example output
@@ -36,6 +47,8 @@ function logExecutionTime(originalMethod: any, _context: any) {
 
 class MathOperations {
   // TODO: use decorators
+  @logExecutionTime
+  @logger
   calculateSquare(n: number): number {
     // Simulate a time-consuming task
     for (let i = 0; i < 1_000_000_000; i++) {}

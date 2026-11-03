@@ -35,6 +35,16 @@ abstract class BaseVehicle implements Vehicle {
   }
 
   public abstract getFuelType(): string;
+
+  public startEngine(): void {
+    console.log("Engine started.");
+  }
+  public stopEngine(): void {
+    console.log("Engine stopped.");
+  }
+  public drive(distance: number): void {
+    console.log(`driving ${distance} km.`);
+  }
 }
 
 /**
@@ -54,8 +64,29 @@ abstract class BaseVehicle implements Vehicle {
  */
 
 // TODO: class Car extends BaseVehicle { ... }
+class Car extends BaseVehicle {  
+  private fuelType: string; 
+
+  public constructor(make: string, model: string, fuelType: string) {
+    super(make, model);
+    this.fuelType = fuelType;
+  }
+
+  public getFuelType(): string {
+    return this.fuelType;
+  }
+}
 
 // TODO: class Motorcycle extends BaseVehicle { ... }
+class Motorcycle extends BaseVehicle {
+  public constructor(make: string, model: string) {
+    super(make, model);
+  }
+
+  public getFuelType(): string {
+    return "electric";
+  }
+}
 
 /**
  * Step 4: Usage:
@@ -83,3 +114,8 @@ abstract class BaseVehicle implements Vehicle {
  */
 
 // TODO
+const audiA1 = new Car("Audi", "A1", "petrol");
+audiA1.startEngine();
+audiA1.drive(100);
+audiA1.stopEngine();
+console.log(audiA1.getFuelType());
