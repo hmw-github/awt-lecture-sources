@@ -14,6 +14,8 @@
 //       - an array is returned as is
 //       - anything else throws an Error
 
+// TODO
+
 /* usage (uncomment when implemented) */
 // console.log(toArray('string'));   // [ 'string' ]
 // console.log(toArray(42));         // [ 42 ]
