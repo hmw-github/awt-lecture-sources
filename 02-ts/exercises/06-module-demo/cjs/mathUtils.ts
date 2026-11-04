@@ -24,3 +24,5 @@ function divide(a: number, b: number): number {
   }
   return calculate(a, b, (a, b) => a / b);
 }
+
+module.exports = { add, subtract, multiply, divide };
