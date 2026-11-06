@@ -12,6 +12,16 @@ app.use(myLogger);
 
 app.get('/hello', (req, res) => {
   res.send('Hello World!')
+
+app.get('/greet', (req, res) => {
+    const name = req.query.name;
+
+    if (name) {
+        res.status(200).send(`Hi ${name}`);
+    } else {
+        res.status(400).send('Supply a name!');
+    }
+  });
 })
 
 app.listen(port, () => {
