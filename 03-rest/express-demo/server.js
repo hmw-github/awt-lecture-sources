@@ -24,7 +24,7 @@ app.get('/greet', (req, res) => {
     }
 });
 
-app.get('/greet2', (req, res) => {
+app.get('/greet2/:name', (req, res) => {
     const name = req.params.name;
 
     if (name) {
