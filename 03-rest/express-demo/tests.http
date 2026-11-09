@@ -13,4 +13,10 @@ GET http://localhost:3000/greet?name=Anna
 ### Test greet without name
 GET http://localhost:3000/greet
 
+### Test greet2 with name
+GET http://localhost:3000/greet2/Anna
+
+### Test greet2 without name
+GET http://localhost:3000/greet2
+
 

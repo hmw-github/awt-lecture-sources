@@ -24,6 +24,16 @@ app.get('/greet', (req, res) => {
     }
 });
 
+app.get('/greet2', (req, res) => {
+    const name = req.params.name;
+
+    if (name) {
+        res.status(200).send(`Hi ${name}`);
+    } else {
+        res.status(400).send('Supply a name!');
+    }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
