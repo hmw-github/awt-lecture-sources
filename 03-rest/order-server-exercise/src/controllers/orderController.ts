@@ -7,6 +7,8 @@ const getOrders = (req: Request, res: Response) => {
   
   const orders = findOrders();
   const result: Order[] = [];
+
+  // TODO: explain...
   orders.map(order => result.push(Order.copyFrom(order)));
   res.send(result);
 
@@ -20,10 +22,12 @@ const getOrderById = (req: Request, res: Response) => {
   if (!id) {
     res.status(404).send();
   } else {
+    // TODO: explain...
     const orderId = Number(id);
     const order = findOrderById(orderId);
 
     if (order) {
+    // TODO: explain copyFrom...
       res.status(200).send(Order.copyFrom(order));
     } else {
       res.status(404).send();
@@ -52,8 +56,8 @@ export {
   getOrders,
   getOrderById,
   postOrder,
-  putOrder,
-  deleteOrder,
-  getPositions,
-  postPosition,
+  // putOrder,
+  // deleteOrder,
+  // getPositions,
+  // postPosition,
 };

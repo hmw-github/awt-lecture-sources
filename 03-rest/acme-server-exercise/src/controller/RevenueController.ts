@@ -11,6 +11,10 @@ export class RevenueController {
    * @returns Revenue[]
    */
   static getRevenues = (req: Request, res: Response) => {
-    // TODO
+    // TODO 2 (easy): GET /revenue -> return all revenues as a JSON array, status 200
+    // Hints:
+    // - Same as TODO 1, but for `Data.revenues` (key = month).
+    // - Remove the placeholder line below once you are done.
+    res.status(501).send({ message: 'TODO 2: GET /revenue not implemented yet' });
   }
 }

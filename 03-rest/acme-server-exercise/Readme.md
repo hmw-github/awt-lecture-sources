@@ -2,6 +2,10 @@
 
 Node.js REST API for invoice and order manangement.
 
+## Exercise
+
+This project is an exercise. The step-by-step instructions are in [_todos.md](_todos.md), ordered from easy to hard.
+
 ## Configuration
 
 - Environment variables are defined in file `.env`.

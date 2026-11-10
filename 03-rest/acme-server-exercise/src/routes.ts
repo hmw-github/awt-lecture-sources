@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express';
-import { UserController } from './controller/userController';
-import { CustomerController } from './controller/customerController';
-import { RevenueController } from './controller/revenueController';
-import { InvoiceController } from './controller/invoiceController';
+import { UserController } from './controller/UserController';
+import { CustomerController } from './controller/CustomerController';
+import { RevenueController } from './controller/RevenueController';
+import { InvoiceController } from './controller/InvoiceController';
 
 export const defineRoutes = (app: express.Express) => {
     app.get('/user', (req: Request, res: Response) => UserController.getUser(req, res));
