@@ -2,6 +2,12 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+/**
+ * Middleware intercepting calls: provide log output
+ * @param {*} req request data
+ * @param {*} res response data
+ * @param {*} next next handler in the handler chain
+ */
 function myLogger(req, res, next) {
   console.log(`> starting call ${req.method} ${req.originalUrl}`);
   next();
@@ -10,6 +16,9 @@ function myLogger(req, res, next) {
 
 app.use(myLogger);
 
+/**
+ * Endpoint definitions
+ */
 app.get('/hello', (req, res) => {
   res.send('Hello World!');
 })
