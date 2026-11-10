@@ -1,0 +1,159 @@
+' Architecture of the order server (REST exercise)
+' Preview in VS Code with the PlantUML extension: Alt+D
+
+' ---------------------------------------------------------------
+' 1) Layered component view
+' ---------------------------------------------------------------
+@startuml order-server-components
+title Order Server – Component View
+
+skinparam componentStyle uml2
+skinparam packageStyle rectangle
+
+actor "REST Client\n(test.http / Browser)" as client
+
+node "Node.js Runtime" {
+  package "Express App" {
+    component "server.ts" as server <<entry point>>
+    component "body-parser\n(JSON / urlencoded)" as bodyparser
+    component "dotenv\n(.env → PORT)" as dotenv
+    component "routes.ts\ndefineRoutes(app)" as routes
+  }
+
+  package "controllers" {
+    component "orderController.ts" as controller
+  }
+
+  package "database" {
+    component "data.ts\n(in-memory orders[])" as data
+  }
+
+  package "models" {
+    component "Order" as order
+    component "Position" as position
+  }
+}
+
+client --> server : HTTP :PORT (default 3000)
+server ..> dotenv : config()
+server ..> bodyparser : app.use()
+server --> routes : defineRoutes(app)
+routes --> controller : GET/POST/PUT/DELETE\n/api/order...
+controller --> data : find / create /\nupdate / remove
+controller ..> order : Order.copyFrom()
+data ..> order
+data ..> position
+order o-- position
+@enduml
+
+' ---------------------------------------------------------------
+' 2) Class / module view
+' ---------------------------------------------------------------
+@startuml order-server-classes
+title Order Server – Class / Module View
+
+hide empty members
+skinparam classAttributeIconSize 0
+
+package models {
+  class Order {
+    + id : number
+    + customer : string
+    + date : string
+    + positions : Position[]
+    + noPositions : number
+    --
+    + constructor(id, customer, date, positions = [])
+    + {static} copyFrom(order : Order) : Order
+  }
+
+  class Position {
+    + nr : number
+    + article : string
+    + amount : number
+  }
+
+  Order "1" *-- "0..*" Position : positions
+}
+
+package database {
+  class data <<module>> {
+    - orders : Order[]
+    --
+    + findOrders() : Order[]
+    + findOrderById(id : number) : Order | undefined
+    + createOrder(order : Order) : Order
+    + updateOrder(update : Order) : boolean
+    + removeOrderById(id : number) : boolean
+    + createPosition(orderId : number, p : Position) : boolean
+    + updatePosition(orderId : number, p : Position) : boolean
+    + removePosition(orderId : number, nr : number) : boolean
+  }
+}
+
+package controllers {
+  class orderController <<module>> {
+    + getOrders(req, res)
+    + getOrderById(req, res)
+    + postOrder(req, res)
+    .. TODO (exercise) ..
+    + putOrder(req, res)
+    + deleteOrder(req, res)
+    + getPositions(req, res)
+    + postPosition(req, res)
+  }
+}
+
+class routes <<module>> {
+  + defineRoutes(app : Express)
+}
+
+class server <<entry point>> {
+  - app : Express
+  - port : string | number
+}
+
+server --> routes : uses
+routes --> orderController : registers handlers
+orderController --> data : uses
+orderController ..> Order : creates DTO
+data o-- "0..*" Order : orders
+
+note right of routes
+  GET    /api/order          → getOrders
+  GET    /api/order/:id      → getOrderById
+  POST   /api/order          → postOrder
+  .. still to be added (see README) ..
+  PUT    /api/order          → putOrder
+  DELETE /api/order/:id      → deleteOrder
+  GET    /api/order/:orderId/position → getPositions
+  POST   /api/order/:orderId/position → postPosition
+end note
+@enduml
+
+' ---------------------------------------------------------------
+' 3) Sequence view: GET /api/order/:id
+' ---------------------------------------------------------------
+@startuml order-server-sequence
+title Request Flow – GET /api/order/:id
+
+actor Client
+participant "Express\n(server.ts)" as Express
+participant "routes.ts" as Routes
+participant "orderController" as Ctrl
+participant "data.ts" as Data
+participant "Order" as Order
+
+Client -> Express : GET /api/order/1
+Express -> Routes : match route
+Routes -> Ctrl : getOrderById(req, res)
+Ctrl -> Data : findOrderById(1)
+Data --> Ctrl : Order | undefined
+alt order found
+  Ctrl -> Order : copyFrom(order)
+  Order --> Ctrl : Order (without positions)
+  Ctrl --> Client : 200 OK + JSON
+else not found
+  Ctrl --> Client : 404 Not Found
+end
+@enduml

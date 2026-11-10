@@ -1,0 +1,221 @@
+' Architecture of the ACME server (REST solution)
+' Preview in VS Code with the PlantUML extension: Alt+D
+
+' ---------------------------------------------------------------
+' 1) Layered component view
+' ---------------------------------------------------------------
+@startuml acme-server-components
+title ACME Server – Component View
+
+skinparam componentStyle uml2
+skinparam packageStyle rectangle
+
+actor "REST Client\n(tests.http / Frontend)" as client
+
+node "Node.js Runtime" {
+  package "Express App" {
+    component "server.ts" as server <<entry point>>
+    component "body-parser\n(JSON / urlencoded)" as bodyparser
+    component "dotenv\n(.env → PORT, required)" as dotenv
+    component "routes.ts\ndefineRoutes(app)" as routes
+  }
+
+  package "controller" {
+    component "UserController" as userCtrl
+    component "CustomerController" as customerCtrl
+    component "RevenueController" as revenueCtrl
+    component "InvoiceController" as invoiceCtrl
+  }
+
+  package "database" {
+    component "Data\n(in-memory Maps)" as data
+  }
+
+  package "models" {
+    component "User" as user
+    component "Customer" as customer
+    component "Invoice" as invoice
+    component "Revenue" as revenue
+    component "InvoiceForCustomer\n(DTO)" as ifc
+  }
+}
+
+client --> server : HTTP :PORT
+server ..> dotenv : config()
+server ..> bodyparser : app.use()
+server --> routes : defineRoutes(app)
+server --> data : Data.initialize()
+
+routes --> userCtrl : /user
+routes --> customerCtrl : /customer
+routes --> revenueCtrl : /revenue
+routes --> invoiceCtrl : /invoice/...
+
+userCtrl --> data
+customerCtrl --> data
+revenueCtrl --> data
+invoiceCtrl --> data
+invoiceCtrl ..> ifc : creates (join)
+invoiceCtrl ..> invoice : creates
+
+data ..> user
+data ..> customer
+data ..> invoice
+data ..> revenue
+@enduml
+
+' ---------------------------------------------------------------
+' 2) Class / module view
+' ---------------------------------------------------------------
+@startuml acme-server-classes
+title ACME Server – Class View
+
+hide empty members
+skinparam classAttributeIconSize 0
+
+package models {
+  class User {
+    + id : string
+    + name : string
+    + email : string
+    + password : string
+  }
+
+  class Customer {
+    + id : string
+    + name : string
+    + email : string
+    + image_url : string
+  }
+
+  class Invoice {
+    + id : string
+    + customer_id : string
+    + amount : number
+    + date : string
+    + status : string
+  }
+
+  class Revenue {
+    + month : string
+    + revenue : number
+  }
+
+  class InvoiceForCustomer <<DTO>> {
+    + id : string
+    + name : string
+    + image_url : string
+    + email : string
+    + date : string
+    + amount : number
+    + status : string
+    --
+    + toString() : string
+  }
+
+  Invoice "0..*" --> "1" Customer : customer_id
+}
+
+package database {
+  class Data {
+    + {static} users : Map<email, User>
+    + {static} customers : Map<id, Customer>
+    + {static} invoices : Map<id, Invoice>
+    + {static} revenues : Map<month, Revenue>
+    - {static} seedID : number
+    --
+    + {static} nextId() : string
+    + {static} initialize() : void
+  }
+}
+
+package controller {
+  class UserController {
+    + {static} getUser(req, res)
+  }
+  class CustomerController {
+    + {static} getCustomers(req, res)
+  }
+  class RevenueController {
+    + {static} getRevenues(req, res)
+  }
+  class InvoiceController {
+    + {static} ITEMS_PER_PAGE = 6
+    --
+    + {static} getInvoiceById(req, res)
+    + {static} getLatestInvoices(req, res)
+    + {static} getFilteredInvoices(req, res)
+    + {static} createInvoice(req, res)
+    + {static} updateInvoice(req, res)
+    + {static} deleteInvoice(req, res)
+  }
+}
+
+class routes <<module>> {
+  + defineRoutes(app : Express)
+}
+
+class server <<entry point>> {
+  - app : Express
+  - PORT : string
+}
+
+server --> routes : uses
+server --> Data : initialize()
+routes --> UserController
+routes --> CustomerController
+routes --> RevenueController
+routes --> InvoiceController
+
+UserController --> Data
+CustomerController --> Data
+RevenueController --> Data
+InvoiceController --> Data
+InvoiceController ..> InvoiceForCustomer : creates
+InvoiceController ..> Invoice : creates
+
+Data o-- "0..*" User
+Data o-- "0..*" Customer
+Data o-- "0..*" Invoice
+Data o-- "0..*" Revenue
+
+note right of routes
+  GET    /user?email=            → getUser
+  GET    /customer               → getCustomers
+  GET    /revenue                → getRevenues
+  GET    /invoice?id=            → getInvoiceById
+  GET    /invoice/filtered?query=&currentPage= → getFilteredInvoices
+  GET    /invoice/latest/:limit  → getLatestInvoices
+  POST   /invoice                → createInvoice
+  PUT    /invoice/:id            → updateInvoice
+  DELETE /invoice/:id            → deleteInvoice
+end note
+@enduml
+
+' ---------------------------------------------------------------
+' 3) Sequence view: GET /invoice/latest/:limit
+' ---------------------------------------------------------------
+@startuml acme-server-sequence
+title Request Flow – GET /invoice/latest/:limit
+
+actor Client
+participant "Express\n(server.ts)" as Express
+participant "routes.ts" as Routes
+participant "InvoiceController" as Ctrl
+participant "Data" as Data
+participant "InvoiceForCustomer" as IFC
+
+Client -> Express : GET /invoice/latest/5
+Express -> Routes : match route
+Routes -> Ctrl : getLatestInvoices(req, res)
+loop for each invoice in Data.invoices
+  Ctrl -> Data : customers.get(invoice.customer_id)
+  Data --> Ctrl : Customer
+  Ctrl -> IFC ** : new InvoiceForCustomer(invoice + customer)
+end
+Ctrl -> Ctrl : sort by date (descending)
+opt limit > 0
+  Ctrl -> Ctrl : keep first <limit> entries
+end
+Ctrl --> Client : 200 OK + InvoiceForCustomer[] (JSON)
+@enduml
