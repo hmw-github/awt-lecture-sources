@@ -21,7 +21,7 @@ Content-Type: application/json
   "positions": []
 }
 ### check new order ** copy new id into variable **
-@orderID = 1763463932189
+@orderID = 1794390379012
 GET http://localhost:3000/api/order/{{orderID}}
 
 ### update order
