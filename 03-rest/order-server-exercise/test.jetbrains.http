@@ -1,0 +1,202 @@
+# Version WITH automated tests: JetBrains HTTP Client / httpYac / REST Workbench (NOT supported by "REST Client" by Huachao Mao).
+# Every request has tests (> {% ... %}). Run them one by one or all at once ("Run All").
+
+### check if server is running
+GET http://localhost:3000
+
+> {%
+  client.test("status 200", () => client.assert(response.status === 200, "status " + response.status));
+  client.test("alive message", () => client.assert(String(response.body).includes("running")));
+%}
+
+### get all orders
+GET http://localhost:3000/api/order
+
+> {%
+  client.test("status 200", () => client.assert(response.status === 200, "status " + response.status));
+  client.test("content type is JSON", () => client.assert(response.contentType.mimeType === "application/json"));
+  client.test("array containing order 1", () =>
+    client.assert(Array.isArray(response.body) && response.body.some(o => o.id === 1 && o.customer === "Rajesh")));
+  client.test("orders without position data", () =>
+    client.assert(response.body.every(o => !o.positions || o.positions.length === 0)));
+%}
+
+### get order 1
+GET http://localhost:3000/api/order/1
+
+> {%
+  client.test("status 200", () => client.assert(response.status === 200, "status " + response.status));
+  client.test("content type is JSON", () => client.assert(response.contentType.mimeType === "application/json"));
+  client.test("order 1 of Rajesh", () => client.assert(response.body.id === 1 && response.body.customer === "Rajesh"));
+  client.test("without position data", () => client.assert(!response.body.positions || response.body.positions.length === 0));
+%}
+
+### get invalid order 4711 -> should yield status 404
+GET http://localhost:3000/api/order/4711
+
+> {% client.test("unknown order (404)", () => client.assert(response.status === 404, "status " + response.status)); %}
+
+### create order
+POST http://localhost:3000/api/order
+Content-Type: application/json
+
+{
+  "customer": "Paula",
+  "date": "10 Oct 2025 10:20:00 GMT",
+  "positions": []
+}
+
+> {%
+  client.test("created (201)", () => client.assert(response.status === 201, "status " + response.status));
+  client.test("new order with numeric id", () => client.assert(typeof response.body.id === "number", "id " + response.body.id));
+  client.test("data from the request body", () => client.assert(response.body.customer === "Paula"));
+  // the server answers with the new order -> remember its id for the next requests
+  client.global.set("orderID", String(response.body.id));
+%}
+
+### check new order
+GET http://localhost:3000/api/order/{{orderID}}
+
+> {%
+  client.test("status 200", () => client.assert(response.status === 200, "status " + response.status));
+  client.test("the created order", () => client.assert(String(response.body.id) === client.global.get("orderID")));
+  client.test("customer Paula", () => client.assert(response.body.customer === "Paula"));
+%}
+
+### update order
+PUT http://localhost:3000/api/order/{{orderID}}
+Content-Type: application/json
+
+{
+  "id": {{orderID}},
+  "customer": "Mohammed",
+  "date": "1728556440000"
+}
+
+> {% client.test("updated (200)", () => client.assert(response.status === 200, "status " + response.status)); %}
+
+### verify update
+GET http://localhost:3000/api/order/{{orderID}}
+
+> {%
+  client.test("status 200", () => client.assert(response.status === 200, "status " + response.status));
+  client.test("customer updated to Mohammed", () => client.assert(response.body.customer === "Mohammed", "customer " + response.body.customer));
+  client.test("date updated", () => client.assert(response.body.date === "1728556440000", "date " + response.body.date));
+%}
+
+### delete new order
+DELETE http://localhost:3000/api/order/{{orderID}}
+
+> {% client.test("deleted (200)", () => client.assert(response.status === 200, "status " + response.status)); %}
+
+### verify delete
+GET http://localhost:3000/api/order/{{orderID}}
+
+> {% client.test("order is gone (404)", () => client.assert(response.status === 404, "status " + response.status)); %}
+
+### delete it again
+DELETE http://localhost:3000/api/order/{{orderID}}
+
+> {% client.test("unknown order (404)", () => client.assert(response.status === 404, "status " + response.status)); %}
+
+### update unknown order
+PUT http://localhost:3000/api/order/4711
+Content-Type: application/json
+
+{
+  "id": 4711,
+  "customer": "Nobody",
+  "date": "1728556440000"
+}
+
+> {% client.test("unknown order (404)", () => client.assert(response.status === 404, "status " + response.status)); %}
+
+### get positions for order 1
+GET http://localhost:3000/api/order/1/position
+
+> {%
+  client.test("status 200", () => client.assert(response.status === 200, "status " + response.status));
+  client.test("content type is JSON", () => client.assert(response.contentType.mimeType === "application/json"));
+  client.test("positions 1 and 2", () =>
+    client.assert(Array.isArray(response.body) && [1, 2].every(nr => response.body.some(p => p.nr === nr)), JSON.stringify(response.body)));
+  client.test("positions have nr, article, amount", () =>
+    client.assert(response.body.every(p => typeof p.nr === "number" && p.article && typeof p.amount === "number")));
+%}
+
+### get positions for unknown order
+GET http://localhost:3000/api/order/4711/position
+
+> {% client.test("unknown order (404)", () => client.assert(response.status === 404, "status " + response.status)); %}
+
+### create new position 3 for order 1
+POST http://localhost:3000/api/order/1/position
+Content-Type: application/json
+
+{
+  "nr": 3,
+  "article": "Apple Watch for Friend",
+  "amount": 1
+}
+
+> {% client.test("created (201)", () => client.assert(response.status === 201, "status " + response.status)); %}
+
+### create position 3 again -> nr must be unique
+POST http://localhost:3000/api/order/1/position
+Content-Type: application/json
+
+{
+  "nr": 3,
+  "article": "Apple Watch for Friend",
+  "amount": 1
+}
+
+> {% client.test("rejected (404)", () => client.assert(response.status === 404, "status " + response.status)); %}
+
+### verify new position for order 1
+GET http://localhost:3000/api/order/1/position
+
+> {%
+  const p = response.body.find(p => p.nr === 3);
+  client.test("status 200", () => client.assert(response.status === 200, "status " + response.status));
+  client.test("position 3 added", () => client.assert(p && p.article === "Apple Watch for Friend" && p.amount === 1, JSON.stringify(p)));
+%}
+
+### update position 3 for order 1
+PUT http://localhost:3000/api/order/1/position
+Content-Type: application/json
+
+{
+  "nr": 3,
+  "article": "Apple Watch",
+  "amount": 2
+}
+
+> {% client.test("updated (200)", () => client.assert(response.status === 200, "status " + response.status)); %}
+
+### verify updated position for order 1
+GET http://localhost:3000/api/order/1/position
+
+> {%
+  const p = response.body.find(p => p.nr === 3);
+  client.test("status 200", () => client.assert(response.status === 200, "status " + response.status));
+  client.test("position 3 updated", () => client.assert(p && p.article === "Apple Watch" && p.amount === 2, JSON.stringify(p)));
+%}
+
+### delete position 3 for order 1
+DELETE http://localhost:3000/api/order/1/position/3
+
+> {% client.test("deleted (200)", () => client.assert(response.status === 200, "status " + response.status)); %}
+
+### verify deleted position for order 1
+GET http://localhost:3000/api/order/1/position
+
+> {%
+  client.test("status 200", () => client.assert(response.status === 200, "status " + response.status));
+  client.test("position 3 is gone", () => client.assert(!response.body.some(p => p.nr === 3), JSON.stringify(response.body)));
+  client.test("positions 1 and 2 still there", () => client.assert([1, 2].every(nr => response.body.some(p => p.nr === nr))));
+%}
+
+### delete position 3 again
+DELETE http://localhost:3000/api/order/1/position/3
+
+> {% client.test("unknown position (404)", () => client.assert(response.status === 404, "status " + response.status)); %}

@@ -1,85 +1,44 @@
-# Can be used with the VS Code extension REST Workbench or the JetBrains HTTP Client.
-# Every request has tests (> {% ... %}). Run them one by one or all at once ("Run All").
-# Unfinished endpoints answer 501, so their tests fail until you implement the TODO.
+# For the VS Code extension "REST Client" (Huachao Mao).
+# REST Client has no automated assertions: send each request ("Send Request")
+# and compare the response with the "Expect:" lines.
+# Unfinished endpoints answer 501 until you implement the TODO.
+# A version with automated tests (JetBrains HTTP Client / httpYac) is in tests.jetbrains.http.
+
+@baseUrl = http://localhost:8080
 
 ### get customers
-GET http://localhost:8080/customer
-
-> {%
-  client.test("status 200", () => client.assert(response.status === 200, "status " + response.status));
-  client.test("content type is JSON", () => client.assert(response.contentType.mimeType === "application/json"));
-  client.test("6 customers", () => client.assert(Array.isArray(response.body) && response.body.length === 6, "not an array of 6"));
-  client.test("customers have id, name, email, image_url", () =>
-    client.assert(response.body.every(c => c.id && c.name && c.email && c.image_url)));
-%}
+# Expect: 200, application/json, array of 6 customers, each with id, name, email, image_url
+GET {{baseUrl}}/customer
 
 ### get user
-GET http://localhost:8080/user?email=user@mail.com
-
-> {%
-  client.test("status 200", () => client.assert(response.status === 200, "status " + response.status));
-  client.test("content type is JSON", () => client.assert(response.contentType.mimeType === "application/json"));
-  client.test("user with the requested email", () => client.assert(response.body.email === "user@mail.com"));
-  client.test("user has id, name and password", () => client.assert(response.body.id && response.body.name && response.body.password));
-%}
+# Expect: 200, application/json, user with email "user@mail.com" and id, name, password
+GET {{baseUrl}}/user?email=user@mail.com
 
 ### get revenues
-GET http://localhost:8080/revenue
-
-> {%
-  client.test("status 200", () => client.assert(response.status === 200, "status " + response.status));
-  client.test("content type is JSON", () => client.assert(response.contentType.mimeType === "application/json"));
-  client.test("12 months", () => client.assert(Array.isArray(response.body) && response.body.length === 12, "not an array of 12"));
-  client.test("entries have month and revenue", () =>
-    client.assert(response.body.every(r => typeof r.month === "string" && typeof r.revenue === "number")));
-%}
+# Expect: 200, application/json, array of 12 entries { month: string, revenue: number }
+GET {{baseUrl}}/revenue
 
 ### get invoices (only 5)
-GET http://localhost:8080/invoice/latest/5
-
-> {%
-  client.test("status 200", () => client.assert(response.status === 200, "status " + response.status));
-  client.test("5 invoices", () => client.assert(Array.isArray(response.body) && response.body.length === 5, "not an array of 5"));
-  client.test("joined with customer (name, email, image_url)", () =>
-    client.assert(response.body.every(i => i.id && i.name && i.email && i.image_url && i.date && i.status)));
-  client.test("newest first", () =>
-    client.assert(response.body.every((i, n, a) => n === 0 || new Date(a[n - 1].date) >= new Date(i.date))));
-%}
+# Expect: 200, array of 5 invoices joined with customer (id, name, email, image_url, date, status), newest first
+GET {{baseUrl}}/invoice/latest/5
 
 ### get all invoices
-GET http://localhost:8080/invoice/latest/0
-
-> {%
-  client.test("status 200", () => client.assert(response.status === 200, "status " + response.status));
-  client.test("all invoices (at least 13)", () => client.assert(Array.isArray(response.body) && response.body.length >= 13, "too few"));
-  client.test("newest first", () =>
-    client.assert(response.body.every((i, n, a) => n === 0 || new Date(a[n - 1].date) >= new Date(i.date))));
-%}
+# Expect: 200, array of all invoices (at least 13), newest first
+GET {{baseUrl}}/invoice/latest/0
 
 ### get all invoices with filter for page 1
-GET http://localhost:8080/invoice/filtered?query=Michael&currentPage=1
-
-> {%
-  client.test("status 200", () => client.assert(response.status === 200, "status " + response.status));
-  client.test("at least one and at most 6 invoices (one page)", () =>
-    client.assert(Array.isArray(response.body) && response.body.length >= 1 && response.body.length <= 6, "wrong length"));
-  client.test("only invoices of Michael Novotny", () => client.assert(response.body.every(i => i.name === "Michael Novotny")));
-  client.test("newest first", () =>
-    client.assert(response.body.every((i, n, a) => n === 0 || new Date(a[n - 1].date) >= new Date(i.date))));
-%}
+# Expect: 200, 1 to 6 invoices, all of "Michael Novotny", newest first
+GET {{baseUrl}}/invoice/filtered?query=Michael&currentPage=1
 
 ### get all invoices with empty filter
-GET http://localhost:8080/invoice/filtered?query=&currentPage=1
-
-> {%
-  client.test("status 200", () => client.assert(response.status === 200, "status " + response.status));
-  client.test("one full page (6 invoices)", () => client.assert(Array.isArray(response.body) && response.body.length === 6, "not an array of 6"));
-  client.test("newest first", () =>
-    client.assert(response.body.every((i, n, a) => n === 0 || new Date(a[n - 1].date) >= new Date(i.date))));
-%}
+# Expect: 200, one full page (6 invoices), newest first
+GET {{baseUrl}}/invoice/filtered?query=&currentPage=1
 
 ### create a new invoice
-POST http://localhost:8080/invoice
+# Expect: 201, the new id as body.
+# Send this request FIRST: the requests below use its id via {{invoiceId}}.
+# @name createInvoice
+POST {{baseUrl}}/invoice
 Content-Type: application/json
 
 {
@@ -89,28 +48,16 @@ Content-Type: application/json
     "status": "pending"
 }
 
-> {%
-  client.test("created (201)", () => client.assert(response.status === 201, "status " + response.status));
-  client.test("new id in the body", () =>
-    client.assert(["string", "number"].includes(typeof response.body) && String(response.body).length > 0, "body " + JSON.stringify(response.body)));
-  // the server answers with the new id as body
-  client.global.set("invoiceId", String(response.body));
-%}
+### id of the invoice created above (whole response body)
+@invoiceId = {{createInvoice.response.body.*}}
 
-#### get invoice by id
-GET http://localhost:8080/invoice?id={{invoiceId}}
-
-> {%
-  client.test("status 200", () => client.assert(response.status === 200, "status " + response.status));
-  client.test("the created invoice", () =>
-    client.assert(String(response.body.id) === client.global.get("invoiceId"), "id " + response.body.id));
-  client.test("data from the POST body", () =>
-    client.assert(response.body.customer_id === "d6e15727-9fe1-4961-8c5b-ea44a9bd81aa"
-      && response.body.amount === 100 && response.body.date === "2024-08-12" && response.body.status === "pending"));
-%}
+### get invoice by id
+# Expect: 200, the created invoice: customer_id "d6e15727-...", amount 100, date "2024-08-12", status "pending"
+GET {{baseUrl}}/invoice?id={{invoiceId}}
 
 ### update invoice
-PUT http://localhost:8080/invoice/{{invoiceId}}
+# Expect: 200
+PUT {{baseUrl}}/invoice/{{invoiceId}}
 Content-Type: application/json
 
 {
@@ -121,35 +68,25 @@ Content-Type: application/json
     "status": "paid"
 }
 
-> {% client.test("updated (200)", () => client.assert(response.status === 200, "status " + response.status)); %}
-
-#### get invoice by id to check update
-GET http://localhost:8080/invoice?id={{invoiceId}}
-
-> {%
-  client.test("status 200", () => client.assert(response.status === 200, "status " + response.status));
-  client.test("amount updated to 200", () => client.assert(response.body.amount === 200, "amount " + response.body.amount));
-  client.test("status updated to paid", () => client.assert(response.body.status === "paid", "status " + response.body.status));
-  client.test("customer_id updated", () => client.assert(response.body.customer_id === "4711"));
-%}
+### get invoice by id to check update
+# Expect: 200, amount 200, status "paid", customer_id "4711"
+GET {{baseUrl}}/invoice?id={{invoiceId}}
 
 ### delete invoice
-DELETE http://localhost:8080/invoice/{{invoiceId}}
-
-> {% client.test("deleted (200)", () => client.assert(response.status === 200, "status " + response.status)); %}
+# Expect: 200
+DELETE {{baseUrl}}/invoice/{{invoiceId}}
 
 ### get deleted invoice
-GET http://localhost:8080/invoice?id={{invoiceId}}
-
-> {% client.test("invoice is gone (404)", () => client.assert(response.status === 404, "status " + response.status)); %}
+# Expect: 404
+GET {{baseUrl}}/invoice?id={{invoiceId}}
 
 ### delete it again
-DELETE http://localhost:8080/invoice/{{invoiceId}}
-
-> {% client.test("unknown id (404)", () => client.assert(response.status === 404, "status " + response.status)); %}
+# Expect: 404 (unknown id)
+DELETE {{baseUrl}}/invoice/{{invoiceId}}
 
 ### update unknown invoice
-PUT http://localhost:8080/invoice/{{invoiceId}}
+# Expect: 404 (unknown id)
+PUT {{baseUrl}}/invoice/{{invoiceId}}
 Content-Type: application/json
 
 {
@@ -160,9 +97,6 @@ Content-Type: application/json
     "status": "paid"
 }
 
-> {% client.test("unknown id (404)", () => client.assert(response.status === 404, "status " + response.status)); %}
-
 ### get unknown user
-GET http://localhost:8080/user?email=nobody@mail.com
-
-> {% client.test("unknown user (404)", () => client.assert(response.status === 404, "status " + response.status)); %}
+# Expect: 404
+GET {{baseUrl}}/user?email=nobody@mail.com

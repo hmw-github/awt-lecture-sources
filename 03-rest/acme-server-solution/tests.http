@@ -1,28 +1,44 @@
-# Can be used with VSC Rest Client Extensions
+# For the VS Code extension "REST Client" (Huachao Mao).
+# REST Client has no automated assertions: send each request ("Send Request")
+# and compare the response with the "Expect:" lines.
+# Unfinished endpoints answer 501 until you implement the TODO.
+# A version with automated tests (JetBrains HTTP Client / httpYac) is in tests.jetbrains.http.
+
+@baseUrl = http://localhost:8080
 
 ### get customers
-GET http://localhost:8080/customer
+# Expect: 200, application/json, array of 6 customers, each with id, name, email, image_url
+GET {{baseUrl}}/customer
 
 ### get user
-GET http://localhost:8080/user?email=user@mail.com
+# Expect: 200, application/json, user with email "user@mail.com" and id, name, password
+GET {{baseUrl}}/user?email=user@mail.com
 
 ### get revenues
-GET http://localhost:8080/revenue
+# Expect: 200, application/json, array of 12 entries { month: string, revenue: number }
+GET {{baseUrl}}/revenue
 
 ### get invoices (only 5)
-GET http://localhost:8080/invoice/latest/5
+# Expect: 200, array of 5 invoices joined with customer (id, name, email, image_url, date, status), newest first
+GET {{baseUrl}}/invoice/latest/5
 
 ### get all invoices
-GET http://localhost:8080/invoice/latest/0
+# Expect: 200, array of all invoices (at least 13), newest first
+GET {{baseUrl}}/invoice/latest/0
 
 ### get all invoices with filter for page 1
-GET http://localhost:8080/invoice/filtered?query=Michael&currentPage=1
+# Expect: 200, 1 to 6 invoices, all of "Michael Novotny", newest first
+GET {{baseUrl}}/invoice/filtered?query=Michael&currentPage=1
 
-### get all invoices with empty filter 
-GET http://localhost:8080/invoice/filtered?query=&currentPage=1
+### get all invoices with empty filter
+# Expect: 200, one full page (6 invoices), newest first
+GET {{baseUrl}}/invoice/filtered?query=&currentPage=1
 
 ### create a new invoice
-POST http://localhost:8080/invoice 
+# Expect: 201, the new id as body.
+# Send this request FIRST: the requests below use its id via {{invoiceId}}.
+# @name createInvoice
+POST {{baseUrl}}/invoice
 Content-Type: application/json
 
 {
@@ -32,28 +48,55 @@ Content-Type: application/json
     "status": "pending"
 }
 
-### set ID to id from last create request!
-@ID=1726842829794
-#### get invoice by id
-GET http://localhost:8080/invoice?id={{ID}}
+### id of the invoice created above (whole response body)
+@invoiceId = {{createInvoice.response.body.*}}
+
+### get invoice by id
+# Expect: 200, the created invoice: customer_id "d6e15727-...", amount 100, date "2024-08-12", status "pending"
+GET {{baseUrl}}/invoice?id={{invoiceId}}
 
 ### update invoice
-PUT http://localhost:8080/invoice/{{ID}}
+# Expect: 200
+PUT {{baseUrl}}/invoice/{{invoiceId}}
 Content-Type: application/json
 
 {
-    "id": "{{ID}}",
+    "id": "{{invoiceId}}",
     "customer_id": "4711",
     "amount": 200,
     "date": "2024-08-12",
     "status": "paid"
 }
 
-#### get invoice by id to check update
-GET http://localhost:8080/invoice?id={{ID}}
+### get invoice by id to check update
+# Expect: 200, amount 200, status "paid", customer_id "4711"
+GET {{baseUrl}}/invoice?id={{invoiceId}}
 
 ### delete invoice
-DELETE http://localhost:8080/invoice/{{ID}}
+# Expect: 200
+DELETE {{baseUrl}}/invoice/{{invoiceId}}
 
-### get user
-GET http://localhost:8080/user?email=user@mail.com
+### get deleted invoice
+# Expect: 404
+GET {{baseUrl}}/invoice?id={{invoiceId}}
+
+### delete it again
+# Expect: 404 (unknown id)
+DELETE {{baseUrl}}/invoice/{{invoiceId}}
+
+### update unknown invoice
+# Expect: 404 (unknown id)
+PUT {{baseUrl}}/invoice/{{invoiceId}}
+Content-Type: application/json
+
+{
+    "id": "{{invoiceId}}",
+    "customer_id": "d6e15727-9fe1-4961-8c5b-ea44a9bd81aa",
+    "amount": 300,
+    "date": "2024-08-12",
+    "status": "paid"
+}
+
+### get unknown user
+# Expect: 404
+GET {{baseUrl}}/user?email=nobody@mail.com
