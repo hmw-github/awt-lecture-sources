@@ -1,10 +1,11 @@
+@startuml acme-server-components
 ' Architecture of the ACME server (REST solution)
 ' Preview in VS Code with the PlantUML extension: Alt+D
 
 ' ---------------------------------------------------------------
 ' 1) Layered component view
 ' ---------------------------------------------------------------
-@startuml acme-server-components
+
 title ACME Server – Component View
 
 skinparam componentStyle uml2
@@ -64,10 +65,11 @@ data ..> invoice
 data ..> revenue
 @enduml
 
+@startuml acme-server-classes
 ' ---------------------------------------------------------------
 ' 2) Class / module view
 ' ---------------------------------------------------------------
-@startuml acme-server-classes
+
 title ACME Server – Class View
 
 hide empty members
@@ -192,10 +194,11 @@ note right of routes
 end note
 @enduml
 
+@startuml acme-server-sequence
 ' ---------------------------------------------------------------
 ' 3) Sequence view: GET /invoice/latest/:limit
 ' ---------------------------------------------------------------
-@startuml acme-server-sequence
+
 title Request Flow – GET /invoice/latest/:limit
 
 actor Client

@@ -1,0 +1,170 @@
+@startuml order-server-architecture
+' Architecture of the order server (REST exercise)
+' Preview in VS Code with the PlantUML extension: Alt+D
+' The request flow (sequence view) lives in request-flow.puml
+
+' ---------------------------------------------------------------
+' Component view: components, interfaces and dependencies
+' ---------------------------------------------------------------
+
+title Order Server – Architecture (Component View)
+
+skinparam componentStyle uml2
+skinparam packageStyle rectangle
+left to right direction
+
+actor "REST Client\n(test.http / Browser)" as client
+
+file ".env\nPORT=3000" as envfile
+
+node "Node.js Runtime (ts-node / nodemon)" {
+
+  package "3rd-party libraries" <<npm>> {
+    component "express" as express
+    component "body-parser" as bodyparser
+    component "dotenv" as dotenv
+  }
+
+  component "Order Server" as orderServer {
+    portin "HTTP :PORT" as httpPort
+
+    package "Web layer" {
+      component "server.ts" as server <<entry point>>
+      component "routes.ts" as routes <<router>>
+      interface "REST API\n/api/order" as restApi
+    }
+
+    package "Controller layer" {
+      component "orderController.ts" as controller <<controller>>
+    }
+
+    package "Data layer" {
+      component "data.ts" as data <<repository>>
+      database "orders[]\n(in-memory)" as store
+    }
+
+    package "Domain model" {
+      component "Order" as order <<entity>>
+      component "Position" as position <<entity>>
+    }
+  }
+}
+
+' --- external access ---
+client --> httpPort : HTTP / JSON
+httpPort --> server
+
+' --- web layer ---
+server ..> express : app = express()\napp.listen(port)
+server ..> bodyparser : app.use(json / urlencoded)
+server ..> dotenv : config()
+dotenv ..> envfile : reads
+server --> routes : defineRoutes(app)
+routes -- restApi
+restApi --> controller : request handlers
+
+' --- controller → data ---
+controller --> data : findOrders / findOrderById\ncreateOrder / updateOrder / removeOrderById\ncreatePosition / updatePosition / removePosition
+controller ..> order : Order.copyFrom()\n(DTO without positions)
+
+' --- data layer ---
+data --> store : read / write
+store o-- order
+order *-- position
+
+note bottom of restApi
+  GET    /api/order
+  GET    /api/order/:id
+  POST   /api/order
+  PUT    /api/order/:id
+  DELETE /api/order/:id
+  GET    /api/order/:id/position
+  POST   /api/order/:id/position
+end note
+@enduml
+
+@startuml order-server-classes
+' ---------------------------------------------------------------
+' Class / module view
+' ---------------------------------------------------------------
+
+title Order Server – Class / Module View
+
+hide empty members
+skinparam classAttributeIconSize 0
+
+package models {
+  class Order {
+    + id : number
+    + customer : string
+    + date : string
+    + positions : Position[]
+    + noPositions : number
+    --
+    + constructor(id, customer, date, positions = [])
+    + {static} copyFrom(order : Order) : Order
+  }
+
+  class Position {
+    + nr : number
+    + article : string
+    + amount : number
+  }
+
+  Order "1" *-- "0..*" Position : positions
+}
+
+package database {
+  class data <<module>> {
+    - orders : Order[]
+    --
+    + findOrders() : Order[]
+    + findOrderById(id : number) : Order | undefined
+    + createOrder(order : Order) : Order
+    + updateOrder(update : Order) : boolean
+    + removeOrderById(id : number) : boolean
+    + createPosition(orderId : number, p : Position) : boolean
+    + updatePosition(orderId : number, p : Position) : boolean
+    + removePosition(orderId : number, nr : number) : boolean
+  }
+}
+
+package controllers {
+  class orderController <<module>> {
+    + getOrders(req, res)
+    + getOrderById(req, res)
+    + postOrder(req, res)
+    .. TODO (exercise) ..
+    + putOrder(req, res)
+    + deleteOrder(req, res)
+    + getPositions(req, res)
+    + postPosition(req, res)
+  }
+}
+
+class routes <<module>> {
+  + defineRoutes(app : Express)
+}
+
+class server <<entry point>> {
+  - app : Express
+  - port : string | number
+}
+
+server --> routes : uses
+routes --> orderController : registers handlers
+orderController --> data : uses
+orderController ..> Order : creates DTO
+data o-- "0..*" Order : orders
+
+note right of routes
+  GET    /api/order          → getOrders
+  GET    /api/order/:id      → getOrderById
+  POST   /api/order          → postOrder
+  .. still to be added (see README) ..
+  PUT    /api/order/:id      → putOrder
+  DELETE /api/order/:id      → deleteOrder
+  GET    /api/order/:id/position → getPositions
+  POST   /api/order/:id/position → postPosition
+end note
+@enduml
