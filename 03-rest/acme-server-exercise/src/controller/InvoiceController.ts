@@ -11,22 +11,16 @@ export class InvoiceController {
    * Returns an array of invoices with customer information.
    * step 1: join invoices and customers
    * step 2: sort by date descending
-   * step 3: apply limit, limit == 0 means all
+   * step 3: apply limit, limit == 0 means all - use filter() or slice()
    *
    * @returns InvoiceForCustomer[]
    */
   static getLatestInvoices = (req: Request, res: Response) => {
     // TODO 8 (hard): GET /invoice/latest/:limit -> InvoiceForCustomer[] sorted by date, newest first
     // Hints:
-    // - `const limit = Number(req.params.limit);` (path parameters are always strings).
     // - Step 1, join: for each invoice in `Data.invoices`, look up
-    //   `Data.customers.get(invoice.customer_id)` and create
-    //   `new InvoiceForCustomer(invoice.id, customer.name, customer.image_url, customer.email,
-    //                           invoice.date, invoice.amount, invoice.status)`.
-    //   Watch the parameter order in `src/models/InvoiceForCustomer.ts`.
     // - Step 2, sort descending by date:
     //   `result.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());`
-    // - Step 3, limit: `if (limit > 0) result = result.slice(0, limit);`
     // - Remove the placeholder line below once you are done.
     res.status(501).send({ message: 'TODO 8: GET /invoice/latest/:limit not implemented yet' });
   }
@@ -52,11 +46,42 @@ export class InvoiceController {
     //   or `value.toString().toLowerCase().includes(query)`.
     //   `InvoiceForCustomer.toString()` concatenates name, email, date, amount and status.
     // - Step 2, sort: same as TODO 8. Sort before paging, otherwise the pages are random.
-    // - Step 3, paging (only if `currentPage != -1`):
-    //     const offset = (currentPage - 1) * InvoiceController.ITEMS_PER_PAGE;
-    //     result = result.slice(offset, offset + InvoiceController.ITEMS_PER_PAGE);
+    // - Step 3, paging (only if `currentPage != -1`): calculate index and use slice()
     // - Remove the placeholder line below once you are done.
-    res.status(501).send({ message: 'TODO 9: GET /invoice/filtered not implemented yet' });
+    //res.status(501).send({ message: 'TODO 9: GET /invoice/filtered not implemented yet' });
+
+    const query: string = req.query.query as string;
+    const currentPage = Number(req.query.currentPage);
+
+    let result: InvoiceForCustomer[] = [];
+    // step 1: join invoices and customers
+    Data.invoices.forEach((invoice) => {
+      const customer = Data.customers.get(invoice.customer_id);
+      const value = new InvoiceForCustomer(
+        invoice.id,
+        customer.name,
+        customer.image_url,
+        customer.email,
+        invoice.date,
+        invoice.amount,
+        invoice.status
+      );
+      if (
+        query.length == 0 ||
+        value.toString().toLowerCase().indexOf(query.toLowerCase()) != -1
+      ) {
+        result.push(value);
+      }
+    });
+    // step 2: sort by date descending
+    result.sort(
+      (i1, i2) => new Date(i2.date).getTime() - new Date(i1.date).getTime()
+    );
+    if (currentPage && currentPage != -1) {
+      const index = (currentPage - 1) * InvoiceController.ITEMS_PER_PAGE;
+      result = result.slice(index, index + InvoiceController.ITEMS_PER_PAGE);
+    }
+    res.status(200).send(result);
   }
 
   /**
