@@ -48,40 +48,7 @@ export class InvoiceController {
     // - Step 2, sort: same as TODO 8. Sort before paging, otherwise the pages are random.
     // - Step 3, paging (only if `currentPage != -1`): calculate index and use slice()
     // - Remove the placeholder line below once you are done.
-    //res.status(501).send({ message: 'TODO 9: GET /invoice/filtered not implemented yet' });
-
-    const query: string = req.query.query as string;
-    const currentPage = Number(req.query.currentPage);
-
-    let result: InvoiceForCustomer[] = [];
-    // step 1: join invoices and customers
-    Data.invoices.forEach((invoice) => {
-      const customer = Data.customers.get(invoice.customer_id);
-      const value = new InvoiceForCustomer(
-        invoice.id,
-        customer.name,
-        customer.image_url,
-        customer.email,
-        invoice.date,
-        invoice.amount,
-        invoice.status
-      );
-      if (
-        query.length == 0 ||
-        value.toString().toLowerCase().indexOf(query.toLowerCase()) != -1
-      ) {
-        result.push(value);
-      }
-    });
-    // step 2: sort by date descending
-    result.sort(
-      (i1, i2) => new Date(i2.date).getTime() - new Date(i1.date).getTime()
-    );
-    if (currentPage && currentPage != -1) {
-      const index = (currentPage - 1) * InvoiceController.ITEMS_PER_PAGE;
-      result = result.slice(index, index + InvoiceController.ITEMS_PER_PAGE);
-    }
-    res.status(200).send(result);
+    res.status(501).send({ message: 'TODO 9: GET /invoice/filtered not implemented yet' });
   }
 
   /**
