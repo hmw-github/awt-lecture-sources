@@ -165,6 +165,13 @@ export class Data {
   
   static nextId = () => String(Data.seedID++);
 
+/**
+ * Map methods, Map m
+ * - m.set(key, value): insert value for key
+ * - value = m.get(key)
+ * - Iteration: m.forEach((value [, key]) => { ... })
+ */
+
   static initialize = () => {
     usersInit.forEach(user => {
       Data.users.set(user.email, new User(user.id, user.name, user.email, user.password));
