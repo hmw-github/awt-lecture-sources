@@ -4,6 +4,10 @@ import { CustomerController } from './controller/CustomerController';
 import { RevenueController } from './controller/RevenueController';
 import { InvoiceController } from './controller/InvoiceController';
 
+/**
+ * Register handler functions for all endpoints (given by HTTP method and path with params)
+ * @param app express application object
+ */
 export const defineRoutes = (app: express.Express) => {
     app.get('/user', (req: Request, res: Response) => UserController.getUser(req, res));
     app.get('/customer', (req: Request, res: Response) => CustomerController.getCustomers(req, res));
