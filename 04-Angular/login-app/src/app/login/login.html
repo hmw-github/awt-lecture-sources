@@ -1,0 +1,28 @@
+<h1>Hello {{user}}, please login</h1>
+
+<p>
+    Name: <input type="text" [(ngModel)]="username">
+</p>
+
+<p>
+    Password: <input type="password" [(ngModel)]="password">
+</p>
+
+<p>
+    <button (click)="checkLogin()">Login</button>
+</p>
+
+<p>{{message}}</p>
+
+<hr/>
+
+@if (attempts.length == 0) {
+    <p>History is empty!</p>
+} 
+@else {
+    <ul>
+        @for (attempt of attempts; track attempt) {
+            <li>{{attempt}}</li>
+        }
+    </ul>
+}
