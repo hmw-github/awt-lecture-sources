@@ -1,6 +1,6 @@
 import { NgStyle } from "@angular/common";
 import { Component, ChangeDetectionStrategy } from "@angular/core";
-import { Form, FormsModule } from "@angular/forms";
+import { Form, FormsModule, NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 
 @Component({
@@ -31,12 +31,14 @@ export class LoginComponent {
     return Object.keys(form.controls);
   }
 
-  login(form: Form): void {
+  login(form: NgForm): void {
     if (this.username === 'Hugo' && this.password === '123') {
       this.message = 'Hooray!';
     } else {
       this.message = 'Invalid username/password combination!';
     }
+    // parameter may be used to access controls, e.g.
+    //    form.controls['uname'].status;
   }
 
   cancel(): void {

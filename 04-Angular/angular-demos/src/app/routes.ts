@@ -8,6 +8,15 @@ import { CollectionComponent } from "./components/collection/collection.componen
 import { HelloComponent } from "./components/hello/hello.component";
 import { SquareNumbersComponent } from "./components/square-numbers/square-numbers.component";
 
+/**
+ * Routing table
+ * How does routing work?
+ * 1. How can you change the current route (=path-suffix)?
+ *      a) ...
+ *      b) ...
+ * 2. What happens when the route is changed? ...
+ * 3. How can you place the routing result (=component)? ...
+ */
 
 const routeConfig: Routes = [
     { path: '', redirectTo: '/menu', pathMatch: 'full' },
