@@ -1,4 +1,4 @@
-import { Component, computed, Input, WritableSignal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, WritableSignal, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Todo } from '../../model/Todo';
 

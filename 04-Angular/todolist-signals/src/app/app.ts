@@ -18,5 +18,5 @@ export class App {
     new Todo(NaN, "program a cool app", "open"),
   ];
   // define a Signal containing the initial todos
-  public todos = signal<Todo[]>(this.todosInit);
+  public todos: WritableSignal<Todo[]> = signal<Todo[]>(this.todosInit);
 }
