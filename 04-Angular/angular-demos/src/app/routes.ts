@@ -12,10 +12,11 @@ import { SquareNumbersComponent } from "./components/square-numbers/square-numbe
  * Routing table
  * How does routing work?
  * 1. How can you change the current route (=path-suffix)?
- *      a) ...
- *      b) ...
- * 2. What happens when the route is changed? ...
- * 3. How can you place the routing result (=component)? ...
+ *      a) [routerLink]="['/service']"
+ *      b) this.router.navigate(['/newRoute']);
+ * 2. What happens when the route is changed? the routing table is used to determine the component to display
+ *    in <router-outlet>
+ * 3. How can you place the routing result (=component)? use <router-outlet> in the template where you want it
  */
 
 const routeConfig: Routes = [

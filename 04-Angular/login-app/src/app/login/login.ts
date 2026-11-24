@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+type Attempt = {
+  user: string, pwd: string
+};
+
 @Component({
   imports: [FormsModule],
   selector: 'app-login',
@@ -10,17 +14,30 @@ import { FormsModule } from '@angular/forms';
 })
 export class Login {
   user: string = 'Anna Miller';
-  username: string = 'Anna';
-  password: string = '123';
+  username: string = '';
+  password: string = '';
   message: string = '';
-  attempts: string[] = []; 
+  attempts: Attempt[] = []; 
+  disabled: string = 'disabled';
 
   checkLogin(): void {
-    this.attempts.push(`${this.username}/${this.password}`);
-    if (this.username == 'Anna' && this.password == '123') {
+    const attempt: Attempt = {
+      user: this.username,
+      pwd: this.password
+    };
+    this.attempts.push(attempt);
+    if (this.username == 'Anna' 
+        && this.password == '123') {
       this.message = 'You are logged in!';
+      this.username = '';
+      this.password = '';
     } else {
       this.message = 'Invalid credentials!';
     }
+  }
+
+  keyup(): void {
+    this.disabled = (this.username != '' && this.password != '') ? 
+      '' : 'disabled';
   }
 }

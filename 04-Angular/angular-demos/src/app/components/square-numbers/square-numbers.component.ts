@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Location } from '@angular/common';
 import { SquareNumber } from '../../models/SquareNumber';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-square-numbers',
@@ -16,28 +17,24 @@ export class SquareNumbersComponent {
   squares: SquareNumber[];
   sum!: number[];
 
-  constructor(private location: Location) {
+  // location is of type Location and is injected
+  constructor(private location: Location, private router: Router) {
     this.squares = [];
   }
   show(): void {
     this.squares = [];
-    let total = 0;
-    this.sum = [];
 
+    // only generate squares if inputs are valid
     if (this.firstSquare > 0 && this.noSquares > 0) {
-      for (
-        let i = this.firstSquare;
-        i < this.firstSquare + this.noSquares;
-        ++i
-      ) {
+      // create sqares and fill the squares array
+      for (let i = this.firstSquare; i < this.firstSquare + this.noSquares; ++i) {
         const sq = new SquareNumber(i);
         this.squares.push(sq);
-        total += sq.square;
-        this.sum.push(total);
       }
     }
   }
   backToMenu() {
-    this.location.back();
+    //this.location.back();
+    this.router.navigate(['/menu']);
   }
 }

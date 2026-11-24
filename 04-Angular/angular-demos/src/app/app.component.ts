@@ -8,7 +8,7 @@ import { RouterOutlet } from '@angular/router';
     ],
     changeDetection: ChangeDetectionStrategy.Eager,
     template: `
-    <h1>Current router outlet:</h1>
+    routing >
     <router-outlet></router-outlet>
     `
 })

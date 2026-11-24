@@ -44,16 +44,14 @@
             <th>Nr</th>
             <th>Number</th>
             <th>Square</th>
-            <th>Sum</th>
           </tr>
         </thead>
         <tbody>
-          @for (sq of squares; track squares; let i = $index) {
+          @for (sq of squares; track sq; let i = $index) {
             <tr>
               <td>{{ i + 1 }}</td>
               <td>{{ sq.no }}</td>
               <td>{{ sq.square }}</td>
-              <td>{{ sum[i] }}</td>
             </tr>
           }
         </tbody>
