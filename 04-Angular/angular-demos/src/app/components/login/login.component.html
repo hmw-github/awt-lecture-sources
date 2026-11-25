@@ -8,7 +8,7 @@
           <input id="username" type="text" name="uname" [(ngModel)]="username"
             required #uname="ngModel" (keyup)='keyup()'>
         </div>
-        @if (!uname.valid) {
+        @if (!uname.valid && !uname.pristine) {
           <div class="error-message">
             <!-- div [hidden]="username.pristine || username.valid" class="error-message" -->
             Please enter a username!
@@ -31,7 +31,7 @@
           <input id="email" type="email" name="email" [(ngModel)]="emailAddress"
             required #email="ngModel" (keyup)='keyup()' email>
         </div>
-        @if (email.touched && !email.valid) {
+        @if (!email.valid) {
           <div class="error-message">
             @if (email.errors?.['required']) {
               <small>Please enter your email!</small>

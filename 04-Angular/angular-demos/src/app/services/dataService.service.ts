@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class DataService {
     private readonly url = 'https://jsonplaceholder.typicode.com';
 
-    public constructor(private httpClient: HttpClient) {
+    public constructor(public httpClient: HttpClient) {
     }
 
     public getPhotos(): Observable<Photo[]> {

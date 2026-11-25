@@ -1,0 +1,36 @@
+<fieldset>
+    <legend>Todolist component</legend>
+    <h1>My Todo List</h1>
+    <label for="todo-text">New todo: </label>
+    <input type="text" id="todo-text" [(ngModel)]="newTodo">
+    <button (click)="addTodo()">add</button>
+    <hr>
+    <h1>Current Todos</h1>
+    @if (todosForState(false).length == 0) {
+        <p>No todos - enjoy your day!</p>
+    } @else {
+        <ul>
+            @for (todo of todosForState(false); track todo) {
+                <li>
+                    {{todo.text}} 
+                    <button (click)="setDone(todo)">done</button>
+                </li>
+            }
+        </ul>
+    }
+    <hr>
+    <h1>Completed Todos</h1>
+    @if (todosForState(true).length == 0) {
+        <p>No completed todos...</p>
+    } @else {
+        <ul>
+            @for (todo of todosForState(true); track todo) {
+                <li>
+                    {{todo.text}} 
+                    <button (click)="setDone(todo)">done</button>
+                </li>
+            }
+        </ul>
+    }
+
+</fieldset>
