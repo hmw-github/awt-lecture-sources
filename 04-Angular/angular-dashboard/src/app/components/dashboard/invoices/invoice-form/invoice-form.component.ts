@@ -8,9 +8,10 @@ import { AbstractControl, ValidatorFn } from '@angular/forms';
 import { Invoice } from '../../../../models/Invoice';
 import { SubscriptionService } from '../../../../services/subscription.service';
 import { formatCurrency } from '../../../../utils';
+import { ValidationErrors } from '@angular/forms';
 
 export function minZeroValidator(): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
+  return (control: AbstractControl): ValidationErrors | null => {
     const isValid = control.value !== null && control.value > 0;
     console.log(`minZeroValidator: ${isValid}`);
     return isValid ? null : { 'minZero': { value: control.value } };
@@ -24,7 +25,7 @@ export function minZeroValidator(): ValidatorFn {
     templateUrl: './invoice-form.component.html'
 })
 export class InvoiceFormComponent implements OnInit {
-  formatCurrency = formatCurrency;
+  formatCurrency = formatCurrency; // expose for template
   invoiceId: string | null = null;
   customers: Customer[] = [];
   customerError: string = '';
