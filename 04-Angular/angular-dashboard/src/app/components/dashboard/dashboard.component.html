@@ -5,15 +5,20 @@
     </a>
 
     <div class="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
-      <a class="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium   hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3" routerLink="" routerLinkActive="active-link">
+      <a class="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium   hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3" 
+        [routerLink]="['']"> 
         <span class="material-symbols-outlined">home</span>
         Home
       </a>
-      <a class="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium   hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3" routerLink="invoices" routerLinkActive="active-link">
+      <a class="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium   hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3" 
+        [routerLink]="['invoices']" 
+        routerLinkActive="active-link"><!-- adds the CSS class active-link whenever this route is currently active -->
         <span class="material-symbols-outlined">content_copy</span>
         Invoices
       </a>
-      <a class="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium   hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3" routerLink="customers" routerLinkActive="active-link">
+      <a class="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium   hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3" 
+        [routerLink]="['customers']" 
+        routerLinkActive="active-link">
         <span class="material-symbols-outlined">groups</span>
         Customers
       </a>

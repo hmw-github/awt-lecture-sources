@@ -36,11 +36,12 @@ export class DebounceService {
 
   debounce(key: string, callback: () => void, delay: number = 300) {
     if (this.timers[key]) {
-      clearTimeout(this.timers[key]);
+      // timer is set but user typed a key before the timer ellapsed
+      clearTimeout(this.timers[key]);  // clear timer and setup a new one below
     }
 
     this.timers[key] = setTimeout(() => {
-      callback();
+      callback(); // call function 'callback' after 'delay' milliseconds 
     }, delay);
   }
 }

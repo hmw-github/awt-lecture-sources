@@ -17,7 +17,9 @@ export class LoginFormComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   authenticate() {
-    this.authService.login(this.email, this.password).subscribe((ok) => {
+    this.authService
+    .login(this.email, this.password)
+    .subscribe((ok) => {
       if (ok) {
         this.router.navigate(['dashboard']);
       } else {

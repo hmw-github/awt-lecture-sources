@@ -27,7 +27,7 @@ export class SearchComponent implements OnInit {
     this.debounceService.debounce('search', () => {
       this.searchTerm = value;
       this.onSearch(value); // Your debounced search function
-    }, 500);  // 500ms debounce time
+    }, 2000);  // 2000ms debounce time to demonstrate the effect
   }
 
   /**
